@@ -1,0 +1,41 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #ffffff;
+  color: #003b1f;
+  padding: 20px;
+  text-align: center;
+}
+
+.title {
+  font-size: 28px;
+  color: #005131;
+  margin-bottom: 20px;
+}
+
+.buttons button {
+  display: block;
+  width: 80%;
+  margin: 10px auto;
+  padding: 15px;
+  font-size: 18px;
+  background-color: #00754a;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.lista {
+  margin-top: 20px;
+}
+
+.lista button {
+  margin: 5px;
+  padding: 10px;
+  font-size: 16px;
+  background-color: #005131;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
