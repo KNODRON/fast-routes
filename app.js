@@ -1,19 +1,28 @@
-const puntos = {
-  comisarias: [
-    { nombre: "1ª Comisaría Santiago", coords: "-33.437394,-70.649138" },
-    { nombre: "10ª Comisaría La Cisterna", coords: "-33.532371,-70.653637" },
-    { nombre: "36ª Comisaría La Florida", coords: "-33.527722,-70.567748" }
-  ],
-  urgencias: [
-    { nombre: "Posta Central", coords: "-33.448777,-70.653952" },
-    { nombre: "Hospital Sótero del Río", coords: "-33.562738,-70.590708" },
-    { nombre: "CRS Cordillera", coords: "-33.579145,-70.579423" }
-  ]
+let puntos = {
+  comisarias: [],
+  urgencias: []
 };
+
+// Cargar datos desde el archivo JSON externo
+fetch('puntos-rutas-rapidas.json')
+  .then(response => response.json())
+  .then(data => {
+    puntos = data;
+  })
+  .catch(error => {
+    console.error("Error al cargar puntos:", error);
+    alert("No se pudo cargar la base de datos de puntos.");
+  });
 
 function mostrarLista(tipo) {
   const contenedor = document.getElementById("lista");
   contenedor.innerHTML = "";
+
+  if (!puntos[tipo] || puntos[tipo].length === 0) {
+    contenedor.innerHTML = "<p>No hay datos disponibles.</p>";
+    return;
+  }
+
   puntos[tipo].forEach(p => {
     const btn = document.createElement("button");
     btn.textContent = p.nombre;
