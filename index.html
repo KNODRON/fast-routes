@@ -128,6 +128,44 @@
             const comisariasJsonUrl = "https://raw.githubusercontent.com/KNODRON/fast-routes/main/comisarias_por_prefectura.json";
             const urgenciasJsonUrl = "https://raw.githubusercontent.com/KNODRON/fast-routes/main/puntos-rutas-rapidas.json";
 
+            // --- Función para mostrar el modal de selección de navegación ---
+            function mostrarModalNavegacion(lat, lng) {
+                const modalOverlay = document.createElement("div");
+                modalOverlay.className = "modal-overlay";
+
+                const modalContent = document.createElement("div");
+                modalContent.className = "modal-content";
+                modalContent.innerHTML = `
+                    <h3>¿Cómo deseas navegar?</h3>
+                    <button id="googleMapsBtn">Google Maps</button>
+                    <button id="wazeBtn">Waze</button>
+                    <button class="cancel-button" id="cancelNavBtn">Cancelar</button>
+                `;
+
+                modalOverlay.appendChild(modalContent);
+                document.body.appendChild(modalOverlay);
+
+                document.getElementById("googleMapsBtn").onclick = () => {
+                    window.open(`https://www.google.com/maps/place/$${lat},${lng}`, "_blank");
+                    modalOverlay.remove(); // Cerrar el modal
+                };
+
+                document.getElementById("wazeBtn").onclick = () => {
+                    window.open(`http://googleusercontent.com/waze://?ll=${lat},${lng}&navigate=yes`, "_blank");
+                    modalOverlay.remove(); // Cerrar el modal
+                };
+
+                document.getElementById("cancelNavBtn").onclick = () => {
+                    modalOverlay.remove(); // Cerrar el modal
+                };
+
+                // Cerrar modal si se hace clic fuera del contenido
+                modalOverlay.addEventListener('click', (e) => {
+                    if (e.target === modalOverlay) {
+                        modalOverlay.remove();
+                    }
+                });
+            }
             // --- Lógica para "Comisarías" ---
             comisariasBtn.addEventListener("click", async () => {
                 botonesContainer.innerHTML = "";
