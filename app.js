@@ -46,7 +46,8 @@ document.addEventListener("DOMContentLoaded", () => {
             const btn = crearBoton(c.nombre, "boton-comisaria", () => {
                 const coords = c.coords.split(",").map(x => x.trim());
                 const [lat, lng] = coords;
-                // URL corregida para Google Maps
+                // *** CORRECCIÓN CRÍTICA AQUÍ ***
+                // URL correcta para Google Maps usando coordenadas
                 const url = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
                 window.open(url, "_blank"); // Abrir en una nueva pestaña
             });
@@ -75,7 +76,8 @@ document.addEventListener("DOMContentLoaded", () => {
             urgencias.forEach(p => {
                 const btn = crearBoton(p.nombre, "boton-urgencia", () => {
                     const coords = p.coords.split(",").map(x => x.trim());
-                    // URL corregida para Google Maps
+                    // *** CORRECCIÓN CRÍTICA AQUÍ ***
+                    // URL correcta para Google Maps usando coordenadas
                     const url = `https://www.google.com/maps/search/?api=1&query=${coords[0]},${coords[1]}`;
                     window.open(url, "_blank");
                 });
@@ -100,35 +102,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- Lógica para "Emergencia" ---
     emergenciaBtn.addEventListener("click", () => {
+        botonesContainer.innerHTML = "<p>Buscando ubicación para emergencia...</p>"; // Mensaje mientras carga
+
         // Opción 1: Buscar "hospital de urgencia" en el mapa cerca de la ubicación actual del usuario (si la permite)
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(position => {
                 const lat = position.coords.latitude;
                 const lng = position.coords.longitude;
+                // *** CORRECCIÓN CRÍTICA AQUÍ ***
                 // Búsqueda de "hospital de urgencia" cerca de la ubicación del usuario
-                const url = `https://www.google.com/maps/search/hospital+de+urgencia/@${lat},${lng},14z`;
+                const url = `https://www.google.com/maps/search/?api=1&query=hospital+de+urgencia&query_place_id=${lat},${lng}`;
                 window.open(url, "_blank");
+                botonesContainer.innerHTML = ""; // Limpia el mensaje después de abrir el mapa
             }, (error) => {
                 console.error("Error obteniendo la ubicación:", error);
                 // Si la geolocalización falla o es denegada, abre una búsqueda general en Santiago
                 const defaultQuery = encodeURIComponent("hospital de urgencia Santiago");
+                // *** CORRECCIÓN CRÍTICA AQUÍ ***
                 const url = `https://www.google.com/maps/search/?api=1&query=${defaultQuery}`;
                 window.open(url, "_blank");
+                botonesContainer.innerHTML = "<p>No se pudo obtener tu ubicación actual. Abriendo búsqueda de hospitales de urgencia en Santiago.</p>";
                 alert("No se pudo obtener tu ubicación actual. Abriendo búsqueda de hospitales de urgencia en Santiago.");
             });
         } else {
             // Si el navegador no soporta geolocalización
             const defaultQuery = encodeURIComponent("hospital de urgencia Santiago");
+            // *** CORRECCIÓN CRÍTICA AQUÍ ***
             const url = `https://www.google.com/maps/search/?api=1&query=${defaultQuery}`;
             window.open(url, "_blank");
+            botonesContainer.innerHTML = "<p>Tu navegador no soporta geolocalización. Abriendo búsqueda de hospitales de urgencia en Santiago.</p>";
             alert("Tu navegador no soporta geolocalización. Abriendo búsqueda de hospitales de urgencia en Santiago.");
         }
-
-        // Opción 2: Si quieres un punto fijo para emergencia (por ejemplo, Posta Central)
-        /*
-        const postaCentralCoords = "-33.448777,-70.653952"; // Coordenadas de la Posta Central
-        const url = `https://www.google.com/maps/search/?api=1&query=${postaCentralCoords}`;
-        window.open(url, "_blank");
-        */
     });
 });
