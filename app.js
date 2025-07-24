@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const botonesContainer = document.getElementById("botonesContainer");
 
   comisariasBtn.addEventListener("click", async () => {
-    const response = await fetch("https://knodron.github.io/fast-routes/comisarias_por_prefectura.json");
+    const response = await fetch("https://raw.githubusercontent.com/KNODRON/fast-routes/main/comisarias_por_prefectura.json");
     const data = await response.json();
     botonesContainer.innerHTML = "";
 
@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   urgenciasBtn.addEventListener("click", async () => {
-    const response = await fetch("puntos-rutas-rapidas.json");
+    const response = await fetch("https://raw.githubusercontent.com/KNODRON/fast-routes/main/puntos-rutas-rapidas.json");
     const data = await response.json();
     const urgencias = data.hospitales || [];
     botonesContainer.innerHTML = "";
