@@ -9,7 +9,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const data = await response.json();
     botonesContainer.innerHTML = "";
 
-    // Mostrar botones por prefectura
     Object.keys(data).forEach(prefectura => {
       const btn = document.createElement("button");
       btn.className = "boton-prefectura";
@@ -20,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   function mostrarComisarias(comisarias) {
-    botonesContainer.innerHTML = ""; // Limpiar prefecturas
+    botonesContainer.innerHTML = "";
 
     comisarias.forEach(c => {
       const btn = document.createElement("button");
@@ -35,7 +34,6 @@ document.addEventListener("DOMContentLoaded", () => {
       botonesContainer.appendChild(btn);
     });
 
-    // Botón para volver atrás
     const volverBtn = document.createElement("button");
     volverBtn.className = "boton-volver";
     volverBtn.innerText = "⬅️ Volver";
