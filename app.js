@@ -1,36 +1,49 @@
-let puntos = {
-  comisarias: [],
-  urgencias: []
-};
+let comisariasPorPrefectura = {};
+let seleccion = document.getElementById("lista");
 
-// Cargar JSON desde GitHub (raw)
-fetch('https://raw.githubusercontent.com/KNODRON/fast-routes/main/puntos-rutas-rapidas.json')
+// Cargar el archivo JSON desde GitHub (RAW)
+fetch('https://raw.githubusercontent.com/KNODRON/fast-routes/main/comisarias_por_prefectura.json')
   .then(response => response.json())
   .then(data => {
-    puntos = data;
+    comisariasPorPrefectura = data;
+    mostrarPrefecturas();
   })
   .catch(error => {
-    console.error("Error al cargar puntos:", error);
-    alert("No se pudo cargar la base de datos de puntos.");
+    console.error("Error al cargar comisarías:", error);
+    seleccion.innerHTML = "<p>No se pudo cargar la información de comisarías.</p>";
   });
+
+function mostrarPrefecturas() {
+  seleccion.innerHTML = "";
+  for (const prefectura in comisariasPorPrefectura) {
+    const btn = document.createElement("button");
+    btn.textContent = prefectura;
+    btn.onclick = () => mostrarComisarias(prefectura);
+    seleccion.appendChild(btn);
+  }
+}
+
+function mostrarComisarias(prefectura) {
+  seleccion.innerHTML = "";
+
+  const volver = document.createElement("button");
+  volver.textContent = "⬅️ Volver";
+  volver.onclick = mostrarPrefecturas;
+  seleccion.appendChild(volver);
+
+  comisariasPorPrefectura[prefectura].forEach(com => {
+    const btn = document.createElement("button");
+    btn.textContent = com.nombre;
+    btn.onclick = () => {
+      const direccion = `${com.nombre}, ${com.direccion}, ${com.comuna}`;
+      window.open(`https://www.google.com/maps/search/${encodeURIComponent(direccion)}`, "_blank");
+    };
+    seleccion.appendChild(btn);
+  });
+}
 
 function mostrarLista(tipo) {
-  const contenedor = document.getElementById("lista");
-  contenedor.innerHTML = "";
-
-  if (!puntos[tipo] || puntos[tipo].length === 0) {
-    contenedor.innerHTML = "<p>No hay datos disponibles.</p>";
-    return;
-  }
-
-  puntos[tipo].forEach(p => {
-    const btn = document.createElement("button");
-    btn.textContent = p.nombre;
-    btn.onclick = () => {
-      window.open(`https://www.google.com/maps/dir/?api=1&destination=${p.coords}`, "_blank");
-    };
-    contenedor.appendChild(btn);
-  });
+  seleccion.innerHTML = "<p>Esta función está en desarrollo.</p>";
 }
 
 function irAlaUrgenciaMasCercana() {
