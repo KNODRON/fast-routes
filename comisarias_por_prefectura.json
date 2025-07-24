@@ -1,0 +1,68 @@
+{
+  "SANTIAGO CENTRAL": [
+    {
+      "nombre": "1ª COMISARÍA SANTIAGO",
+      "coords": "-33.447487, -70.673676"
+    },
+    {
+      "nombre": "3ª COMISARÍA SANTIAGO",
+      "coords": "-33.451293, -70.660194"
+    }
+  ],
+  "SANTIAGO NORTE": [
+    {
+      "nombre": "6ª COMISARÍA RECOLETA",
+      "coords": "-33.409250, -70.642572"
+    },
+    {
+      "nombre": "8ª COMISARÍA COLINA",
+      "coords": "-33.197480, -70.676590"
+    }
+  ],
+  "SANTIAGO SUR": [
+    {
+      "nombre": "12ª COMISARÍA SAN MIGUEL",
+      "coords": "-33.492092, -70.649711"
+    },
+    {
+      "nombre": "14ª COMISARÍA SAN BERNARDO",
+      "coords": "-33.592305, -70.702744"
+    }
+  ],
+  "SANTIAGO CORDILLERA": [
+    {
+      "nombre": "38ª COMISARÍA PUENTE ALTO",
+      "coords": "-33.610554, -70.575785"
+    }
+  ],
+  "SANTIAGO OCCIDENTE": [
+    {
+      "nombre": "26ª COMISARÍA PUDAHUEL",
+      "coords": "-33.451249, -70.782903"
+    }
+  ],
+  "SANTIAGO ORIENTE": [
+    {
+      "nombre": "17ª COMISARÍA LAS CONDES",
+      "coords": "-33.408667, -70.570655"
+    }
+  ],
+  "DEL MAIPO": [
+    {
+      "nombre": "15ª COMISARÍA BUIN",
+      "coords": "-33.733453, -70.742657"
+    }
+  ],
+  "C.O.P.": [
+    {
+      "nombre": "C.O.P. LA REINA",
+      "coords": "-33.454023, -70.540114"
+    }
+  ],
+  "SANTIAGO COSTA": [
+    {
+      "nombre": "3ª COMISARÍA DE CARABINEROS DE VIÑA DEL MAR",
+      "coords": "-33.0246, -71.5518"
+    }
+  ]
+}
