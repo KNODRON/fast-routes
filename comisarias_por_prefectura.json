@@ -35,9 +35,17 @@
   ],
   "SANTIAGO NORTE": [
     {
-      "nombre": "6ª COMISARÍA RECOLETA",
-      "coords": "-33.409250, -70.642572"
+      "nombre": "5ª COMISARÍA CONCHALI",
+      "coords": "-33.389895, -70.660225"
     },
+    {
+      "nombre": "6ª COMISARÍA RECOLETA",
+      "coords": "-33.409346, -70.641911"
+    },
+    {
+      "nombre": "8ª COMISARÍA COLINA",
+      "coords": "-33.204530, -70.682758"
+    }
     {
       "nombre": "8ª COMISARÍA COLINA",
       "coords": "-33.197480, -70.676590"
