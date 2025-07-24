@@ -2,12 +2,36 @@
   "SANTIAGO CENTRAL": [
     {
       "nombre": "1ª COMISARÍA SANTIAGO",
-      "coords": "-33.447487, -70.673676"
+      "coords": "-33.435887, -70.647587"
+    },
+    {
+      "nombre": "2ª COMISARÍA SANTIAGO",
+      "coords": "-33.45460463686459, -70.66801477142103"
     },
     {
       "nombre": "3ª COMISARÍA SANTIAGO",
-      "coords": "-33.451293, -70.660194"
-    }
+      "coords": "-33.441597, -70.658488"
+    },
+    {
+      "nombre": "4ª COMISARÍA SANTIAGO",
+      "coords": "-33.465215, -70.645572"
+    },
+    {
+      "nombre": "21ª COMISARÍA ESTACION CENTRAL",
+      "coords": "-33.451400, -70.692456"
+    },
+    {
+      "nombre": "22ª COMISARÍA QUINTA NORMAL",
+      "coords": "-33.439763, -70.694132"
+    },
+    {
+      "nombre": "48ª COMISARÍA MENORES",
+      "coords": "-33.450101320256934, -70.65748454599557"
+    },
+    {
+      "nombre": "58ª COMISARÍA POB. ALESSANDRI",
+      "coords": "-33.469834, -70.698998"
+    },
   ],
   "SANTIAGO NORTE": [
     {
