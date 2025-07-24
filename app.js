@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const botonesContainer = document.getElementById("botonesContainer");
 
   comisariasBtn.addEventListener("click", async () => {
-    const response = await fetch("comisarias_por_prefectura.json");
+    const response = await fetch("https://knodron.github.io/fast-routes/comisarias_por_prefectura.json");
     const data = await response.json();
     botonesContainer.innerHTML = "";
 
