@@ -1,304 +1,68 @@
 {
-  "COMISARIAS": [
-    {
-      "nombre": "UNIDAD",
-      "direccion": "DIRECCION",
-      "comuna": "COMUNA"
-    }
-  ],
   "SANTIAGO CENTRAL": [
     {
-      "nombre": "1° COM. SANTIAGO",
-      "direccion": "SANTO DOMINGO 714",
-      "comuna": "SANTIAGO"
+      "nombre": "1ª COMISARÍA SANTIAGO",
+      "coords": "-33.447487, -70.673676"
     },
     {
-      "nombre": "2° COM. SANTIAGO",
-      "direccion": "TOESCA 2245",
-      "comuna": "SANTIAGO"
-    },
-    {
-      "nombre": "3° COM. SANTIAGO",
-      "direccion": "PASAJE FERNANDEZ ALBANO 165",
-      "comuna": "SANTIAGO"
-    },
-    {
-      "nombre": "4° COM. SANTIAGO",
-      "direccion": "CHILOE 1472",
-      "comuna": "SANTIAGO"
-    },
-    {
-      "nombre": "21° COM. ESTACION CENTRAL",
-      "direccion": "AV. ECUADOR 4050",
-      "comuna": "ESTACION CENTRAL"
-    },
-    {
-      "nombre": "22° COM. QUINTA NORMAL",
-      "direccion": "SANTO DOMINGO 4390",
-      "comuna": "QUINTA NORMAL"
-    },
-    {
-      "nombre": "32° COM. SANTIAGO",
-      "direccion": "SANTO DOMINGO 1180",
-      "comuna": "SANTIAGO"
-    },
-    {
-      "nombre": "48° COM. MENORES",
-      "direccion": "DIECIOCHO 268",
-      "comuna": "SANTIAGO"
-    },
-    {
-      "nombre": "58° COM. POB. ALESSANDRI",
-      "direccion": "ANTARTICA 4701",
-      "comuna": "ESTACION CENTRAL"
+      "nombre": "3ª COMISARÍA SANTIAGO",
+      "coords": "-33.451293, -70.660194"
     }
   ],
   "SANTIAGO NORTE": [
     {
-      "nombre": "30° COM. RADIOPATRULLAS",
-      "direccion": "CARRION 1795",
-      "comuna": "INDEPENDENCIA"
+      "nombre": "6ª COMISARÍA RECOLETA",
+      "coords": "-33.409250, -70.642572"
     },
     {
-      "nombre": "49° COM. QUILICURA",
-      "direccion": "QUILICURA 526",
-      "comuna": "QUILICURA"
-    },
-    {
-      "nombre": "5° COM. CONCHALI",
-      "direccion": "GENERAL GAMBINO 3731",
-      "comuna": "CONCHALI"
-    },
-    {
-      "nombre": "54° COM. HUECHURABA",
-      "direccion": "AV. RECOLETA 5560",
-      "comuna": "HUECHURABA"
-    },
-    {
-      "nombre": "6° COM. RECOLETA",
-      "direccion": "GAVILAN 1980",
-      "comuna": "RECOLETA"
-    },
-    {
-      "nombre": "8° COM. COLINA",
-      "direccion": "CONCEPCION 575",
-      "comuna": "COLINA"
-    },
-    {
-      "nombre": "9° COM. INDEPENDENCIA",
-      "direccion": "AV. HIPODROMO CHILE 1025",
-      "comuna": "INDEPENDENCIA"
-    },
-    {
-      "nombre": "57° COM. MOTORIZADA",
-      "direccion": "BEZANILLA 1546",
-      "comuna": "INDEPENDENCIA"
+      "nombre": "8ª COMISARÍA COLINA",
+      "coords": "-33.197480, -70.676590"
     }
   ],
   "SANTIAGO SUR": [
     {
-      "nombre": "10° COM. LA CISTERNA",
-      "direccion": "AV. JOSE MIGUEL CARRERA 9089",
-      "comuna": "LA CISTERNA"
+      "nombre": "12ª COMISARÍA SAN MIGUEL",
+      "coords": "-33.492092, -70.649711"
     },
     {
-      "nombre": "12° COM. SAN MIGUEL",
-      "direccion": "AV. JOSE MIGUEL CARRERA 3868",
-      "comuna": "SAN MIGUEL"
-    },
-    {
-      "nombre": "15° COM. BUIN",
-      "direccion": "MANUEL RODRIGUEZ 705",
-      "comuna": "BUIN"
-    },
-    {
-      "nombre": "31° COM. SAN RAMON",
-      "direccion": "AV. VICUÑA MACKENNA 1759",
-      "comuna": "SAN RAMON"
-    },
-    {
-      "nombre": "39° COM. EL BOSQUE",
-      "direccion": "LOS RAULIES 11240",
-      "comuna": "EL BOSQUE"
-    },
-    {
-      "nombre": "13° COM LA GRANJA",
-      "direccion": "PADRE JUAN MEYER 851",
-      "comuna": "LA GRANJA"
-    },
-    {
-      "nombre": "50° COM. SAN JOAQUIN",
-      "direccion": "AV. CARLOS VALDOVINOS 282",
-      "comuna": "SAN JOAQUIN"
-    },
-    {
-      "nombre": "41° COM. LA PINTANA",
-      "direccion": "BALDOMERO LILLO NRO. 1901",
-      "comuna": "LA PINTANA"
-    }
-  ],
-  "DEL MAIPO": [
-    {
-      "nombre": "14° COM. SAN BERNARDO",
-      "direccion": "O´HIGGINS 326",
-      "comuna": "SAN BERNARDO"
-    },
-    {
-      "nombre": "62° COM. SAN BERNARDO",
-      "direccion": "AV. COLON SUR 0713",
-      "comuna": "SAN BERNARDO"
-    },
-    {
-      "nombre": "SUBCOM. CALERA DE TANGO",
-      "direccion": "CALERA DE TANGO & ALFONSP RUIZ TAGLE",
-      "comuna": "CALERA DE TANGO"
-    },
-    {
-      "nombre": "64° COM. PAINE",
-      "direccion": "AV. 18 DE SEPTIEMBRE 201",
-      "comuna": "PAINE"
+      "nombre": "14ª COMISARÍA SAN BERNARDO",
+      "coords": "-33.592305, -70.702744"
     }
   ],
   "SANTIAGO CORDILLERA": [
     {
-      "nombre": "20° COM. PUENTE ALTO",
-      "direccion": "BALMACEDA 431",
-      "comuna": "PUENTE ALTO"
-    },
-    {
-      "nombre": "36° COM. LA FLORIDA",
-      "direccion": "DR. SOTERO DEL RIO 321",
-      "comuna": "LA FLORIDA"
-    },
-    {
-      "nombre": "46° COM. MACUL",
-      "direccion": "ESCUELA AGRICOLA 2340",
-      "comuna": "MACUL"
-    },
-    {
-      "nombre": "38° COM. PUENTE ALTO",
-      "direccion": "AV. CONCHA Y TORO 3399",
-      "comuna": "PUENTE ALTO"
-    },
-    {
-      "nombre": "66° COM. BAJOS DE MENA",
-      "direccion": "AV. JUANITA 0699",
-      "comuna": "PUENTE ALTO"
-    },
-    {
-      "nombre": "65° COM. PIRQUE",
-      "direccion": "MELCHOR CONCHA Y TORO 02603",
-      "comuna": "PIRQUE"
+      "nombre": "38ª COMISARÍA PUENTE ALTO",
+      "coords": "-33.610554, -70.575785"
     }
   ],
   "SANTIAGO OCCIDENTE": [
     {
-      "nombre": "26° COM. PUDAHUEL",
-      "direccion": "TENIENTE CRUZ 710",
-      "comuna": "PUDAHUEL"
-    },
-    {
-      "nombre": "27° COM. AEROPUERTO",
-      "direccion": "AV. ARMANDO CORTINEZ 1761",
-      "comuna": "PUDAHUEL"
-    },
-    {
-      "nombre": "44° COM. LO PRADO",
-      "direccion": "SAN PABLO 5829",
-      "comuna": "LO PRADO"
-    },
-    {
-      "nombre": "45° COM. CERRO NAVIA",
-      "direccion": "LOS CONQUISTADORES 7350",
-      "comuna": "CERRO NAVIA"
-    },
-    {
-      "nombre": "7° COM. RENCA",
-      "direccion": "BLANCO ENCALADA 79",
-      "comuna": "RENCA"
+      "nombre": "26ª COMISARÍA PUDAHUEL",
+      "coords": "-33.451249, -70.782903"
     }
   ],
   "SANTIAGO ORIENTE": [
     {
-      "nombre": "18° COM. ÑUÑOA",
-      "direccion": "LICENCIADO DE LAS PEÑAS 5147",
-      "comuna": "ÑUÑOA"
-    },
-    {
-      "nombre": "19° COM. PROVIDENCIA",
-      "direccion": "AV. MIGUEL CLARO 300",
-      "comuna": "PROVIDENCIA"
-    },
-    {
-      "nombre": "33° COM. ÑUÑOA",
-      "direccion": "GUILLERMO MANN 2100",
-      "comuna": "ÑUÑOA"
-    },
-    {
-      "nombre": "43° COM. PEÑALOLEN",
-      "direccion": "CONSISTORIAL 2060",
-      "comuna": "PEÑALOLEN"
+      "nombre": "17ª COMISARÍA LAS CONDES",
+      "coords": "-33.408667, -70.570655"
     }
   ],
-  "SANTIAGO ANDES": [
+  "DEL MAIPO": [
     {
-      "nombre": "16° COM. LA REINA",
-      "direccion": "AV. ECHEÑIQUE 8428",
-      "comuna": "LA REINA"
-    },
-    {
-      "nombre": "17° COM. LAS CONDES",
-      "direccion": "AV. LAS TRANQUERAS 840",
-      "comuna": "LAS CONDES"
-    },
-    {
-      "nombre": "37° COM. VITACURA",
-      "direccion": "PUERTO RICO 7905",
-      "comuna": "VITACURA"
-    },
-    {
-      "nombre": "47° COM. LOS DOMINICOS",
-      "direccion": "EL ALBA 9210",
-      "comuna": "LAS CONDES"
-    },
-    {
-      "nombre": "53° COM. LO BARNECHEA",
-      "direccion": "LO BARNECHEA 1119",
-      "comuna": "LO BARNECHEA"
-    }
-  ],
-  "SANTIAGO COSTA": [
-    {
-      "nombre": "24° COM. MELIPILLA",
-      "direccion": "ORTUZAR 675",
-      "comuna": "MELIPILLA"
-    },
-    {
-      "nombre": "63° COM. CURACAVI",
-      "direccion": "AMBROSIO O´HIGGINS 2211",
-      "comuna": "CURACAVI"
-    },
-    {
-      "nombre": "TCIA. CARRET. CURACAVI",
-      "direccion": "RUTA 68",
-      "comuna": "CURACAVI"
-    },
-    {
-      "nombre": "23° COM. TALAGANTE",
-      "direccion": "BOMBERO HERNAN AVILES GONZALEZ 875",
-      "comuna": "TALAGANTE"
+      "nombre": "15ª COMISARÍA BUIN",
+      "coords": "-33.733453, -70.742657"
     }
   ],
   "C.O.P.": [
     {
-      "nombre": "28° COM. COP",
-      "direccion": "SAN ISIDRO 330",
-      "comuna": "SANTIAGO"
-    },
+      "nombre": "C.O.P. LA REINA",
+      "coords": "-33.454023, -70.540114"
+    }
+  ],
+  "SANTIAGO COSTA": [
     {
-      "nombre": "40° COM. COP",
-      "direccion": "CARDENAL JOSE MARIA CARO 3137",
-      "comuna": "LO ESPEJO"
+      "nombre": "3ª COMISARÍA DE CARABINEROS DE VIÑA DEL MAR",
+      "coords": "-33.0246, -71.5518"
     }
   ]
 }
