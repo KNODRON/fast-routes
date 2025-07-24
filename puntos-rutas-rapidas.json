@@ -1,0 +1,36 @@
+{
+  "comisarias": [
+    { "nombre": "1ª Comisaría Santiago", "coords": "-33.437394,-70.649138" },
+    { "nombre": "10ª Comisaría La Cisterna", "coords": "-33.532371,-70.653637" },
+    { "nombre": "36ª Comisaría La Florida", "coords": "-33.527722,-70.567748" },
+    { "nombre": "17ª Comisaría Las Condes", "coords": "-33.410641,-70.558445" },
+    { "nombre": "43ª Comisaría Peñalolén", "coords": "-33.497156,-70.549383" },
+    { "nombre": "19ª Comisaría Providencia", "coords": "-33.432470,-70.618444" },
+    { "nombre": "21ª Comisaría Estación Central", "coords": "-33.455368,-70.688108" },
+    { "nombre": "33ª Comisaría Ñuñoa", "coords": "-33.454259,-70.598387" },
+    { "nombre": "26ª Comisaría Pudahuel", "coords": "-33.441902,-70.781693" },
+    { "nombre": "40ª Comisaría Fuerzas Especiales", "coords": "-33.435805,-70.711682" },
+    { "nombre": "47ª Comisaría Los Dominicos", "coords": "-33.407711,-70.526757" },
+    { "nombre": "14ª Comisaría San Bernardo", "coords": "-33.594176,-70.707426" },
+    { "nombre": "25ª Comisaría Maipú", "coords": "-33.515652,-70.757847" },
+    { "nombre": "12ª Comisaría San Miguel", "coords": "-33.502801,-70.641282" },
+    { "nombre": "20ª Comisaría Puente Alto", "coords": "-33.615150,-70.574824" },
+    { "nombre": "52ª Comisaría Rinconada", "coords": "-33.492668,-70.763895" },
+    { "nombre": "23ª Comisaría Talagante", "coords": "-33.663142,-70.927224" },
+    { "nombre": "2ª Comisaría Santiago Central", "coords": "-33.447141,-70.657927" },
+    { "nombre": "3ª Comisaría Renca", "coords": "-33.403614,-70.717102" },
+    { "nombre": "24ª Comisaría Melipilla", "coords": "-33.687410,-71.215703" }
+  ],
+  "urgencias": [
+    { "nombre": "Hospital Sótero del Río", "coords": "-33.562738,-70.590708" },
+    { "nombre": "Hospital El Carmen Maipú", "coords": "-33.510765,-70.768563" },
+    { "nombre": "Hospital San José", "coords": "-33.396722,-70.649539" },
+    { "nombre": "Hospital Barros Luco", "coords": "-33.510365,-70.645882" },
+    { "nombre": "Hospital Clínico Universidad de Chile", "coords": "-33.431352,-70.651189" },
+    { "nombre": "Hospital de Urgencia Asistencia Pública (Posta Central)", "coords": "-33.448777,-70.653952" },
+    { "nombre": "Hospital Exequiel González Cortés", "coords": "-33.509430,-70.663936" },
+    { "nombre": "CRS Cordillera", "coords": "-33.579145,-70.579423" },
+    { "nombre": "SAPU La Florida", "coords": "-33.527005,-70.561206" },
+    { "nombre": "SAPU Lo Hermida", "coords": "-33.488470,-70.565624" }
+  ]
+}
