@@ -3,8 +3,8 @@ let puntos = {
   urgencias: []
 };
 
-// Cargar datos desde el archivo JSON externo
-fetch('puntos-rutas-rapidas.json')
+// Cargar JSON desde GitHub (raw)
+fetch('https://raw.githubusercontent.com/KNODRON/fast-routes/main/puntos-rutas-rapidas.json')
   .then(response => response.json())
   .then(data => {
     puntos = data;
