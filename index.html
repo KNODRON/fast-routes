@@ -4,7 +4,100 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Rutas Rápidas</title>
-    <link rel="stylesheet" href="style.css" />
+    <style>
+        /* INICIO DEL CÓDIGO CSS (style.css) */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            color: #003b1f;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .title {
+            font-size: 28px;
+            color: #005131;
+            margin-bottom: 20px;
+        }
+
+        /* Estilo para los botones principales (Comisarías, Urgencias, Emergencia) */
+        .main-button {
+            display: block; /* Cada botón en su propia línea */
+            width: 80%; /* Ancho del 80% del contenedor */
+            max-width: 400px; /* Limita el ancho máximo para pantallas grandes */
+            margin: 10px auto; /* Centrar y dar espacio */
+            padding: 15px;
+            font-size: 18px;
+            background-color: #00754a; /* Verde oscuro */
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease; /* Transición suave al pasar el ratón */
+        }
+
+        .main-button:hover {
+            background-color: #005131; /* Un poco más oscuro al pasar el ratón */
+        }
+
+        .lista {
+            margin-top: 20px;
+            display: flex; /* Para que los botones se coloquen en fila */
+            flex-wrap: wrap; /* Para que los botones salten de línea si no caben */
+            justify-content: center; /* Centrar los botones dentro del contenedor */
+            gap: 10px; /* Espacio entre los botones */
+        }
+
+        /* Estilo para los botones de prefecturas y comisarias */
+        .boton-prefectura,
+        .boton-comisaria,
+        .boton-urgencia {
+            padding: 10px 15px; /* Ajustar padding */
+            font-size: 16px;
+            background-color: #005131; /* Verde más oscuro, igual que el hover del principal */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            flex-grow: 1; /* Permitir que los botones crezcan para llenar el espacio, pero respeta el width */
+            max-width: 250px; /* Ancho máximo para estos botones secundarios */
+        }
+
+        .boton-prefectura:hover,
+        .boton-comisaria:hover,
+        .boton-urgencia:hover {
+            background-color: #003b1f; /* Un verde aún más oscuro al pasar el ratón */
+        }
+
+        /* Estilo para el botón de "Volver" */
+        .boton-volver {
+            display: block; /* Ocupa toda la línea */
+            width: 80%;
+            max-width: 300px;
+            margin: 20px auto 10px auto; /* Margen superior para separarlo de los otros botones */
+            padding: 12px;
+            font-size: 16px;
+            background-color: #6c757d; /* Un gris para distinguirlo */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .boton-volver:hover {
+            background-color: #5a6268;
+        }
+
+        /* Si quieres que el botón "volver" siempre esté en una nueva línea y centrado: */
+        .lista .boton-volver {
+            width: auto; /* Ancho automático para que no se estire demasiado */
+            display: block; /* Asegura que esté en su propia línea */
+            margin: 20px auto; /* Centrado y con margen */
+        }
+        /* FIN DEL CÓDIGO CSS */
+    </style>
 </head>
 <body>
     <h1 class="title">Rutas Rápidas</h1>
@@ -17,6 +110,132 @@
 
     <div id="botonesContainer" class="lista"></div>
 
-    <script src="AAP.JS"></script>
+    <script>
+        // INICIO DEL CÓDIGO JAVASCRIPT (AAP.JS)
+        document.addEventListener("DOMContentLoaded", () => {
+            const comisariasBtn = document.getElementById("comisariasBtn");
+            const urgenciasBtn = document.getElementById("urgenciasBtn");
+            const emergenciaBtn = document.getElementById("emergenciaBtn");
+            const botonesContainer = document.getElementById("botonesContainer");
+
+            function crearBoton(text, className, onClickHandler) {
+                const btn = document.createElement("button");
+                btn.className = className;
+                btn.innerText = text;
+                btn.onclick = onClickHandler;
+                return btn;
+            }
+
+            // URL del JSON para Comisarías
+            const comisariasJsonUrl = "https://raw.githubusercontent.com/KNODRON/fast-routes/main/comisarias_por_prefectura.json";
+            // URL del JSON para Urgencias
+            const urgenciasJsonUrl = "https://raw.githubusercontent.com/KNODRON/fast-routes/main/puntos-rutas-rapidas.json";
+
+            // --- Lógica para "Comisarías" ---
+            comisariasBtn.addEventListener("click", async () => {
+                botonesContainer.innerHTML = "";
+                try {
+                    const response = await fetch(comisariasJsonUrl);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status} al cargar prefecturas`);
+                    }
+                    const data = await response.json();
+
+                    Object.keys(data).forEach(prefectura => {
+                        const btn = crearBoton(prefectura, "boton-prefectura", () => mostrarComisarias(data[prefectura]));
+                        botonesContainer.appendChild(btn);
+                    });
+                } catch (error) {
+                    console.error("Error al cargar las prefecturas:", error);
+                    botonesContainer.innerHTML = `<p style="color: red;">Error al cargar las prefecturas: ${error.message}</p>`;
+                }
+            });
+
+            function mostrarComisarias(comisarias) {
+                botonesContainer.innerHTML = "";
+
+                comisarias.forEach(c => {
+                    const btn = crearBoton(c.nombre, "boton-comisaria", () => {
+                        const coords = c.coords.split(",").map(x => x.trim());
+                        const [lat, lng] = coords;
+                        // URL de Google Maps para coordenadas
+                        const url = `https://www.google.com/maps/search/?api=1&query=$${lat},${lng}`;
+                        window.open(url, "_blank");
+                    });
+                    botonesContainer.appendChild(btn);
+                });
+
+                const volverBtn = crearBoton("⬅️ Volver", "boton-volver", () => comisariasBtn.click());
+                botonesContainer.appendChild(document.createElement("br"));
+                botonesContainer.appendChild(volverBtn);
+            }
+
+            // --- Lógica para "Urgencias" ---
+            urgenciasBtn.addEventListener("click", async () => {
+                botonesContainer.innerHTML = "";
+                try {
+                    const response = await fetch(urgenciasJsonUrl);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status} al cargar urgencias`);
+                    }
+                    const data = await response.json();
+                    const urgencias = data.urgencias || [];
+
+                    urgencias.forEach(p => {
+                        const btn = crearBoton(p.nombre, "boton-urgencia", () => {
+                            const coords = p.coords.split(",").map(x => x.trim());
+                            const url = `https://www.google.com/maps/search/?api=1&query=$${coords[0]},${coords[1]}`;
+                            window.open(url, "_blank");
+                        });
+                        botonesContainer.appendChild(btn);
+                    });
+
+                    const volverBtn = crearBoton("⬅️ Volver", "boton-volver", () => {
+                        // Limpia el contenedor para volver al estado inicial o puedes recargar los botones principales
+                        botonesContainer.innerHTML = "";
+                        // Si quisieras volver a mostrar los botones principales, necesitarías una función para ello.
+                        // Por ahora, solo limpia, el usuario puede volver a hacer clic en los botones principales.
+                    });
+                    botonesContainer.appendChild(document.createElement("br"));
+                    botonesContainer.appendChild(volverBtn);
+
+                } catch (error) {
+                    console.error("Error al cargar los puntos de urgencia:", error);
+                    botonesContainer.innerHTML = `<p style="color: red;">Error al cargar los puntos de urgencia: ${error.message}</p>`;
+                }
+            });
+
+            // --- Lógica para "Emergencia" ---
+            emergenciaBtn.addEventListener("click", () => {
+                botonesContainer.innerHTML = "<p>Buscando ubicación para emergencia...</p>";
+
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(position => {
+                        const lat = position.coords.latitude;
+                        const lng = position.coords.longitude;
+                        // URL de Google Maps para buscar cerca de una ubicación
+                        const url = `http://googleusercontent.com/maps.google.com/7${lat},${lng}`; // Usamos un 'z' para un buen zoom
+                        window.open(url, "_blank");
+                        botonesContainer.innerHTML = ""; // Limpia el mensaje después de abrir el mapa
+                    }, (error) => {
+                        console.error("Error obteniendo la ubicación:", error);
+                        const defaultQuery = encodeURIComponent("hospital de urgencia Santiago");
+                        // URL de Google Maps para una búsqueda de texto
+                        const url = `https://www.google.com/maps/search/?api=1&query=$${defaultQuery}`;
+                        window.open(url, "_blank");
+                        botonesContainer.innerHTML = "<p style='color: orange;'>No se pudo obtener tu ubicación actual. Abriendo búsqueda de hospitales de urgencia en Santiago.</p>";
+                        alert("No se pudo obtener tu ubicación actual. Abriendo búsqueda de hospitales de urgencia en Santiago.");
+                    });
+                } else {
+                    const defaultQuery = encodeURIComponent("hospital de urgencia Santiago");
+                    const url = `https://www.google.com/maps/search/?api=1&query=${defaultQuery}`;
+                    window.open(url, "_blank");
+                    botonesContainer.innerHTML = "<p style='color: orange;'>Tu navegador no soporta geolocalización. Abriendo búsqueda de hospitales de urgencia en Santiago.</p>";
+                    alert("Tu navegador no soporta geolocalización. Abriendo búsqueda de hospitales de urgencia en Santiago.");
+                }
+            });
+        });
+        // FIN DEL CÓDIGO JAVASCRIPT
+    </script>
 </body>
 </html>
