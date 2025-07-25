@@ -61,12 +61,32 @@
       "coords": "-33.541191, -70.665602"
     },
     {
-      "nombre": "12ª COMISARÍA SAN MIGUEL (desde aqui)",
-      "coords": "-33.492092, -70.649711"
+      "nombre": "12ª COMISARÍA SAN MIGUEL",
+      "coords": "-33.48968417838098, -70.65097363262106"
     },
     {
-      "nombre": "14ª COMISARÍA SAN BERNARDO",
-      "coords": "-33.592305, -70.702744"
+      "nombre": "13ª COMISARÍA LA GRANJA",
+      "coords": "-33.535121, -70.613619"
+    },
+    {
+      "nombre": "15ª COMISARÍA BUIN",
+      "coords": "-33.728449, -70.744593"
+    },
+    {
+      "nombre": "31ª COMISARÍA SAN RAMON",
+      "coords": "-33.545954, -70.645112"
+    },
+    {
+      "nombre": "39ª COMISARÍA EL BOSQUE",
+      "coords": "-33.565571, -70.666155"
+    },
+    {
+      "nombre": "41ª COMISARÍA LA PINTANA",
+      "coords": "-33.582841, -70.631538"
+    },
+    {
+      "nombre": "50ª COMISARÍA SAN SAN JOAQUIN",
+      "coords": "-33.484440, -70.629581"
     }
   ],
   "SANTIAGO CORDILLERA": [
