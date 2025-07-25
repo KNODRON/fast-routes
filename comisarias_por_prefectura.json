@@ -47,13 +47,21 @@
       "coords": "-33.204530, -70.682758"
     },
     {
-      "nombre": "8ª COMISARÍA COLINA",
-      "coords": "-33.197480, -70.676590"
-    }
+      "nombre": "9ª COMISARÍA INDEPENDENCIA",
+      "coords": "-33.406817, -70.657122"
+    },
+    {
+      "nombre": "57ª COMISARÍA MOTORIZADA",
+      "coords": "-33.417789, -70.661393"
+    }    
   ],
   "SANTIAGO SUR": [
     {
-      "nombre": "12ª COMISARÍA SAN MIGUEL",
+      "nombre": "10ª COMISARÍA LA CISTERNA",
+      "coords": "-33.541191, -70.665602"
+    },
+    {
+      "nombre": "12ª COMISARÍA SAN MIGUEL (desde aqui)",
       "coords": "-33.492092, -70.649711"
     },
     {
