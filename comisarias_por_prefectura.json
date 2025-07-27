@@ -21,11 +21,7 @@
       "coords": "-33.451400, -70.692456"
     },
     {
-      "nombre": "22ª COMISARÍA QUINTA NORMAL",
-      "coords": "-33.439763, -70.694132"
-    },
-    {
-      "nombre": "48ª COMISARÍA MENORES",
+      "nombre": "48ª COMISARÍA A. FAMILIA",
       "coords": "-33.450101320256934, -70.65748454599557"
     },
     {
@@ -85,44 +81,176 @@
       "coords": "-33.582841, -70.631538"
     },
     {
+      "nombre": "TCIA. SOM. GALINDO LA PINTANA",
+      "coords": "-33.565224, -70.636974"
+    },
+    {
       "nombre": "50ª COMISARÍA SAN SAN JOAQUIN",
       "coords": "-33.484440, -70.629581"
     }
   ],
+  "SANTIAGO RINCONADA": [
+    {
+      "nombre": "11ª COMISARÍA LO ESPEJO",
+      "coords": "-33.507271, -70.696395"
+    },
+    {
+      "nombre": "25ª COMISARÍA MAIPU",
+      "coords": "-33.506989, -70.754934"
+    },
+    {
+      "nombre": "34ª COMISARÍA CERRILLOS",
+      "coords": "-33.498827, -70.732489"
+    },
+    {
+      "nombre": "SUBCOM. CERRILLOS",
+      "coords": "-33.479429, -70.687883"
+    }, 
+    {
+      "nombre": "52ª COMISARÍA MAIPÚ",
+      "coords": "-33.511233, -70.790768"
+    }, 
+    {
+      "nombre": "51ª COMISARÍA P.A.C.",
+      "coords": "-33.494009, -70.684458"
+    }
+  ],
   "SANTIAGO CORDILLERA": [
     {
+      "nombre": "20ª COMISARÍA PUENTE ALTO",
+      "coords": "-33.607601, -70.575348"
+    },
+    {
+      "nombre": "36ª COMISARÍA LA FLORIDA",
+      "coords": "-33.539494, -70.597616"
+    },
+    {
       "nombre": "38ª COMISARÍA PUENTE ALTO",
-      "coords": "-33.610554, -70.575785"
+      "coords": "-33.579080, -70.581547"
+    },
+    {
+      "nombre": "46ª COMISARÍA MACUL",
+      "coords": "-33.489990, -70.607849"
+    },
+    {
+      "nombre": "65ª COMISARÍA PIRQUE",
+      "coords": "-33.634401, -70.573395"
+    },
+    {
+      "nombre": "66ª COMISARÍA BAJOS DE MENA",
+      "coords": "-33.625658, -70.612596"
     }
   ],
   "SANTIAGO OCCIDENTE": [
     {
+      "nombre": "7ª COMISARÍA RENCA",
+      "coords": "-33.403958, -70.704526"
+    },
+    {
+      "nombre": "22ª COMISARÍA QUINTA NORMAL",
+      "coords": "-33.439763, -70.694132"
+    },
+    {
       "nombre": "26ª COMISARÍA PUDAHUEL",
-      "coords": "-33.451249, -70.782903"
+      "coords": "-33.447837, -70.739537"
+    },
+    {
+      "nombre": "27ª COMISARÍA AEROPUERTO",
+      "coords": "-33.407018, -70.792355"
+    },
+    {
+      "nombre": "44ª COMISARÍA LO PRADO",
+      "coords": "-33.442984, -70.716167"
+    },
+    {
+      "nombre": "45ª COMISARÍA CERRO NAVIA",
+      "coords": "-33.422710, -70.742984"
     }
   ],
   "SANTIAGO ORIENTE": [
     {
-      "nombre": "17ª COMISARÍA LAS CONDES",
-      "coords": "-33.408667, -70.570655"
+      "nombre": "18ª COMISARÍA ÑUÑOA",
+      "coords": "-33.453222, -70.575818"
+    },
+    {
+      "nombre": "19ª COMISARÍA PROVIDENCIA",
+      "coords": "-33.432329, -70.620168"
+    },
+    {
+      "nombre": "33ª COMISARÍA ÑUÑOA",
+      "coords": "-33.470736, -70.613872"
+    },
+    {
+      "nombre": "43ª COMISARÍA PEÑALOLEN",
+      "coords": "-33.478127, -70.544293"
     }
   ],
   "DEL MAIPO": [
     {
-      "nombre": "15ª COMISARÍA BUIN",
-      "coords": "-33.733453, -70.742657"
-    }
-  ],
-  "C.O.P.": [
+      "nombre": "14ª COMISARÍA SAN BERNARDO",
+      "coords": "-33.592450, -70.701040"
+    },
     {
-      "nombre": "C.O.P. LA REINA",
-      "coords": "-33.454023, -70.540114"
+      "nombre": "62ª COMISARÍA SAN BERNARDO",
+      "coords": "-33.594240, -70.686507"
+    },
+    {
+      "nombre": "SUBCOM. CALERA DE TANGO",
+      "coords": "-33.631088, -70.758572"
+    },
+    {
+      "nombre": "64ª COMISARÍA PAINE",
+      "coords": "-33.808046, -70.741664"
     }
   ],
   "SANTIAGO COSTA": [
     {
-      "nombre": "3ª COMISARÍA DE CARABINEROS DE VIÑA DEL MAR",
-      "coords": "-33.0246, -71.5518"
+      "nombre": "23ª COMISARÍA TALAGANTE",
+      "coords": "-33.670303, -70.938617"
+    }, 
+    {
+      "nombre": "24ª COMISARÍA MELIPILLA",
+      "coords": "-33.687886, -71.215393"
+    },
+    {
+      "nombre": "63ª COMISARÍA CURACAVI",
+      "coords": "-33.401549, -71.120119"
+    },
+    {
+      "nombre": "TCIA. CARRETERA CURACAVI",
+      "coords": "-33.405794, -71.188840"
+    }
+  ],
+  "SANTIAGO ANDES": [
+    {
+      "nombre": "16ª COMISARÍA LA REINA",
+      "coords": "-33.441761, -70.544247"
+    },
+    {
+      "nombre": "17ª COMISARÍA LAS CONDES",
+      "coords": "-33.394284, -70.554064"
+    },
+    {
+      "nombre": "37ª COMISARÍA VITACURA",
+      "coords": "-33.389323, -70.554512"
+    },
+    {
+      "nombre": "47ª COMISARÍA LOS DOMINICOS",
+      "coords": "-33.404094, -70.537747"
+    },
+    {
+      "nombre": "53ª COMISARÍA LO BARNECHEA",
+      "coords": "-33.358612, -70.506218"
+    }
+  ],
+  "C.O.P.": [
+    {
+      "nombre": "28ª C.O.P.",
+      "coords": "-33.448414, -70.643154"
+    },
+    {
+      "nombre": "40ª C.O.P.",
+      "coords": "-33.507641, -70.695326"
     }
   ]
 }
