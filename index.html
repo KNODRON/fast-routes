@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -8,7 +7,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: #ffffff;
+            background-color: #ffffff;
             color: #003b1f;
             padding: 20px;
             text-align: center;
@@ -30,36 +29,40 @@
             border: none;
             border-radius: 10px;
             cursor: pointer;
+            transition: background-color 0.3s ease;
         }
 
-        #searchInput {
-            padding: 10px;
-            font-size: 16px;
-            margin: 15px auto;
+        .main-button:hover {
+            background-color: #005131;
+        }
+
+        #search {
             width: 80%;
-            max-width: 400px;
-            border: 2px solid #00754a;
+            max-width: 500px;
+            padding: 10px;
+            margin: 20px auto;
             border-radius: 6px;
+            border: 1px solid #00754a;
         }
 
-        .unidad {
-            background: #e3f7ef;
-            margin: 10px auto;
+        .unidad, .subunidad {
+            background-color: #e7f5ef;
             border: 1px solid #00754a;
-            border-radius: 8px;
-            padding: 10px;
+            margin: 6px auto;
+            padding: 12px;
+            border-radius: 6px;
             max-width: 90%;
+            text-align: left;
             cursor: pointer;
-            font-weight: bold;
+        }
+
+        .unidad:hover {
+            background-color: #c6ebda;
         }
 
         .subunidad {
-            background: #f4fcfa;
-            margin: 4px auto 4px 40px;
-            border-left: 4px solid #00754a;
-            padding: 5px;
-            max-width: 80%;
-            text-align: left;
+            margin-left: 30px;
+            font-size: 14px;
         }
 
         .hidden {
@@ -69,92 +72,76 @@
 </head>
 <body>
     <h1>Rutas Rápidas</h1>
-    <button class="main-button" onclick="toggleComisarias()">👮‍♂️ Comisarías</button>
-    <button class="main-button" onclick="openUrgencias()">🚑 Urgencias</button>
-    <button class="main-button" onclick="openEmergencia()">🆘 Emergencia</button>
 
-    <div id="comisariasContainer" class="hidden">
-        <input type="text" id="searchInput" placeholder="🔍 Buscar comisaría, tenencia o reten..." onkeyup="filtrarUnidades()"/>
-        <div id="unidadesList"></div>
-    </div>
+    <button class="main-button" onclick="mostrarUnidades()">👮‍♂️ Comisarías</button>
+    <button class="main-button" onclick="abrirUrgencias()">🚑 Urgencias</button>
+    <button class="main-button" onclick="abrirEmergencia()">🆘 Emergencia</button>
+
+    <input type="text" id="search" placeholder="🔍 Buscar comisaría, tenencia o reten..." onkeyup="filtrarUnidades()">
+
+    <div id="contenedor"></div>
 
     <script>
-        let data = {};
-        async function toggleComisarias() {
-            const cont = document.getElementById("comisariasContainer");
-            cont.classList.toggle("hidden");
+        let dataGlobal = [];
 
-            if (!data.unidades) {
-                const res = await fetch("https://raw.githubusercontent.com/KNODRON/fast-routes/main/unidades_carabineros_jerarquico.json");
-                data.unidades = await res.json();
-                renderUnidades(data.unidades);
-            }
-        }
+        async function mostrarUnidades() {
+            document.getElementById('contenedor').innerHTML = '';
+            const input = document.getElementById('search');
+            input.value = '';
+            input.classList.remove('hidden');
 
-        function renderUnidades(unidades) {
-            const container = document.getElementById("unidadesList");
-            container.innerHTML = "";
+            const res = await fetch('https://raw.githubusercontent.com/KNODRON/fast-routes/main/unidades_carabineros_jerarquico.json');
+            const data = await res.json();
+            dataGlobal = data;
 
-            unidades.forEach((unidad, index) => {
-                const div = document.createElement("div");
-                div.className = "unidad";
+            data.forEach((unidad, index) => {
+                const div = document.createElement('div');
+                div.className = 'unidad';
                 div.textContent = unidad.nombre;
                 div.onclick = () => {
-                    const hijos = document.getElementById("sub_" + index);
-                    hijos.classList.toggle("hidden");
+                    window.open(`https://www.google.com/maps/place/${unidad.coords}`, '_blank');
+                    mostrarSubunidades(index);
                 };
-
-                container.appendChild(div);
-
-                if (unidad.subunidades) {
-                    const subDiv = document.createElement("div");
-                    subDiv.className = "hidden";
-                    subDiv.id = "sub_" + index;
-
-                    unidad.subunidades.forEach(sub => {
-                        const s = document.createElement("div");
-                        s.className = "subunidad";
-                        s.textContent = sub.nombre;
-                        s.onclick = (e) => {
-                            e.stopPropagation();
-                            window.open("https://www.google.com/maps/place/" + sub.coords, "_blank");
-                        };
-                        subDiv.appendChild(s);
-                    });
-
-                    container.appendChild(subDiv);
-                }
+                document.getElementById('contenedor').appendChild(div);
             });
+        }
+
+        function mostrarSubunidades(index) {
+            const unidad = dataGlobal[index];
+            if (!unidad.subunidades) return;
+
+            unidad.subunidades.forEach(sub => {
+                const subDiv = document.createElement('div');
+                subDiv.className = 'subunidad';
+                subDiv.textContent = sub.nombre;
+                subDiv.onclick = () => window.open(`https://www.google.com/maps/place/${sub.coords}`, '_blank');
+                document.getElementById('contenedor').appendChild(subDiv);
+            });
+        }
+
+        function abrirUrgencias() {
+            window.open('https://www.google.com/maps/search/SAR', '_blank');
+        }
+
+        function abrirEmergencia() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(pos => {
+                    const { latitude, longitude } = pos.coords;
+                    window.open(`https://www.google.com/maps/search/hospital+de+urgencia/@${latitude},${longitude},14z`, '_blank');
+                }, () => {
+                    window.open('https://www.google.com/maps/search/?api=1&query=hospital+de+urgencia+Santiago', '_blank');
+                });
+            } else {
+                window.open('https://www.google.com/maps/search/?api=1&query=hospital+de+urgencia+Santiago', '_blank');
+            }
         }
 
         function filtrarUnidades() {
-            const texto = document.getElementById("searchInput").value.toLowerCase();
-            const todas = document.querySelectorAll(".unidad, .subunidad");
-            todas.forEach(el => {
-                if (el.textContent.toLowerCase().includes(texto)) {
-                    el.style.display = "block";
-                } else {
-                    el.style.display = "none";
-                }
+            const valor = document.getElementById('search').value.toLowerCase();
+            const divs = document.querySelectorAll('.unidad, .subunidad');
+            divs.forEach(div => {
+                div.style.display = div.textContent.toLowerCase().includes(valor) ? 'block' : 'none';
             });
-        }
-
-        function openUrgencias() {
-            window.open("https://www.google.com/maps/search/?api=1&query=SAR", "_blank");
-        }
-
-        function openEmergencia() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(pos => {
-                    const lat = pos.coords.latitude;
-                    const lng = pos.coords.longitude;
-                    window.open(`https://www.google.com/maps/search/hospital+de+urgencia/@${lat},${lng},14z`, "_blank");
-                }, () => {
-                    window.open("https://www.google.com/maps/search/?api=1&query=hospital+de+urgencia+Santiago", "_blank");
-                });
-            } else {
-                window.open("https://www.google.com/maps/search/?api=1&query=hospital+de+urgencia+Santiago", "_blank");
-            }
         }
     </script>
 </body>
