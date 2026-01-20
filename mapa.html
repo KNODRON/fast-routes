@@ -3,13 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mapa - Rutas Rápidas</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <title>Rutas Rápidas - Mapa</title>
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+    integrity="sha384-sA+z0pTXa+DdJ+2BKwD31V1yQGdUoRFeVsfsfgQz3ZoE+m3HYGkYowZR1W8zvxug"
+    crossorigin=""
+  />
   <style>
     html, body {
-      height: 100%;
       margin: 0;
-      font-family: system-ui, sans-serif;
+      padding: 0;
+      height: 100%;
     }
 
     #map {
@@ -17,92 +22,87 @@
       width: 100%;
     }
 
-    .sidebar {
-      position: absolute;
-      top: 10px;
-      left: 10px;
+    .leaflet-top.leaflet-left {
+      top: auto !important;
+      bottom: 10px !important;
+      left: 10px !important;
+    }
+
+    .leaflet-control-zoom {
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .leaflet-control-container .leaflet-top {
       z-index: 1000;
-      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .custom-control {
+      background: white;
       padding: 10px;
-      border-radius: 8px;
-      box-shadow: 0 0 8px rgba(0,0,0,0.3);
+      font-family: sans-serif;
+      font-weight: bold;
+      border-radius: 5px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      margin: 10px;
     }
 
-    .sidebar input {
-      width: 200px;
+    .custom-control input {
+      width: 100%;
       padding: 6px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-
-    @media (max-width: 768px) {
-      .sidebar {
-        width: 90%;
-        left: 5%;
-        top: 10px;
-      }
-
-      .sidebar input {
-        width: 100%;
-      }
+      margin-top: 5px;
+      font-size: 14px;
     }
   </style>
 </head>
 <body>
   <div id="map"></div>
-  <div class="sidebar">
-    <strong>🔍 Rutas Rápidas</strong><br />
-    <input type="text" id="buscador" placeholder="Buscar unidad..." />
-  </div>
 
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha384-WnvUQGvMbGG0m9wtxSkK3yoGJUrjOuvCPTJGyZwG+Aj6k+jqRkt4cWyZOh0Ra7xD" crossorigin=""></script>
   <script>
-    const map = L.map('map').setView([-33.45, -70.66], 11); // Santiago
+    const map = L.map('map').setView([-33.45, -70.6667], 12);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
-      attribution: '© OpenStreetMap'
+      attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
 
-    let marcadores = [];
+    const control = L.control({ position: 'topleft' });
 
-    fetch("unidades_carabineros_jerarquico.json")
-      .then(res => res.json())
-      .then(data => {
-        data.forEach(comisaria => {
-          if (comisaria.lat && comisaria.lng) {
-            const marker = L.marker([comisaria.lat, comisaria.lng])
-              .addTo(map)
-              .bindPopup(`<strong>${comisaria.nombre}</strong>`);
-            marcadores.push({ nombre: comisaria.nombre, marker });
+    control.onAdd = function (map) {
+      const div = L.DomUtil.create('div', 'custom-control');
+      div.innerHTML = `
+        <div>🔍 <strong>Rutas Rápidas</strong><br />
+        <input type="text" id="searchBox" placeholder="Buscar unidad...">
+        </div>
+      `;
+      return div;
+    };
 
-            if (comisaria.subunidades) {
-              comisaria.subunidades.forEach(sub => {
-                if (sub.lat && sub.lng) {
-                  const subMarker = L.marker([sub.lat, sub.lng], {
-                    icon: L.icon({
-                      iconUrl: "https://cdn-icons-png.flaticon.com/512/684/684908.png",
-                      iconSize: [24, 24],
-                    }),
-                  }).addTo(map)
-                    .bindPopup(`<strong>${sub.nombre}</strong>`);
-                  marcadores.push({ nombre: sub.nombre, marker: subMarker });
-                }
-              });
+    control.addTo(map);
+
+    // Cargar datos desde JSON
+    fetch("puntos-rutas-rapidas.json")
+      .then((res) => res.json())
+      .then((data) => {
+        const markers = [];
+
+        data.forEach((item) => {
+          const marker = L.marker([item.lat, item.lng])
+            .bindPopup(`<strong>${item.nombre}</strong><br>${item.tipo}`);
+          marker.addTo(map);
+          markers.push({ marker, nombre: item.nombre.toLowerCase() });
+        });
+
+        document.getElementById("searchBox").addEventListener("input", function () {
+          const query = this.value.toLowerCase();
+          markers.forEach(({ marker, nombre }) => {
+            if (nombre.includes(query)) {
+              marker.openPopup();
+              map.setView(marker.getLatLng(), 16);
             }
-          }
+          });
         });
       });
-
-    document.getElementById("buscador").addEventListener("input", e => {
-      const valor = e.target.value.toLowerCase();
-      marcadores.forEach(obj => {
-        if (obj.nombre.toLowerCase().includes(valor)) {
-          obj.marker.openPopup();
-          map.setView(obj.marker.getLatLng(), 15);
-        }
-      });
-    });
   </script>
 </body>
 </html>
