@@ -2,17 +2,13 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Mapa Rutas Rápidas</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <!-- Leaflet CSS -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-
+  <title>Mapa - Rutas Rápidas</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <style>
-    body, html {
-      margin: 0;
-      padding: 0;
+    html, body {
       height: 100%;
+      margin: 0;
       font-family: system-ui, sans-serif;
     }
 
@@ -23,123 +19,90 @@
 
     .sidebar {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 260px;
-      height: 100%;
-      background: #f3f6fa;
-      border-right: 1px solid #ccc;
-      padding: 12px;
-      overflow-y: auto;
+      top: 10px;
+      left: 10px;
       z-index: 1000;
-    }
-
-    .sidebar h2 {
-      font-size: 18px;
-      margin: 0 0 10px;
-      color: #0F172A;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.3);
     }
 
     .sidebar input {
-      width: 100%;
-      padding: 6px 8px;
-      margin-bottom: 10px;
+      width: 200px;
+      padding: 6px;
       border: 1px solid #ccc;
       border-radius: 4px;
     }
 
-    .sidebar ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 90%;
+        left: 5%;
+        top: 10px;
+      }
 
-    .sidebar li {
-      padding: 6px;
-      margin-bottom: 4px;
-      cursor: pointer;
-      background: #e0f2f1;
-      border-left: 4px solid #2563EB;
-      transition: background 0.2s;
-    }
-
-    .sidebar li:hover {
-      background: #c8e6e5;
+      .sidebar input {
+        width: 100%;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="sidebar">
-    <h2>Rutas Rápidas</h2>
-    <input type="text" id="buscador" placeholder="Buscar unidad..." />
-    <ul id="listaUnidades"></ul>
-  </div>
   <div id="map"></div>
+  <div class="sidebar">
+    <strong>🔍 Rutas Rápidas</strong><br />
+    <input type="text" id="buscador" placeholder="Buscar unidad..." />
+  </div>
 
-  <!-- Leaflet JS -->
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script>
-    const map = L.map('map').setView([-33.45, -70.66], 12);
+    const map = L.map('map').setView([-33.45, -70.66], 11); // Santiago
 
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '© OpenStreetMap'
     }).addTo(map);
 
-    let markers = [];
-    const iconoUnidad = L.icon({
-      iconUrl: 'https://cdn-icons-png.flaticon.com/512/854/854866.png',
-      iconSize: [30, 30],
-      iconAnchor: [15, 30],
-      popupAnchor: [0, -30]
-    });
+    let marcadores = [];
 
-    async function cargarUnidades() {
-      const res = await fetch('unidades_carabineros_jerarquico.json');
-      const data = await res.json();
-      const lista = document.getElementById("listaUnidades");
+    fetch("unidades_carabineros_jerarquico.json")
+      .then(res => res.json())
+      .then(data => {
+        data.forEach(comisaria => {
+          if (comisaria.lat && comisaria.lng) {
+            const marker = L.marker([comisaria.lat, comisaria.lng])
+              .addTo(map)
+              .bindPopup(`<strong>${comisaria.nombre}</strong>`);
+            marcadores.push({ nombre: comisaria.nombre, marker });
 
-      data.forEach(comisaria => {
-        const comMarker = agregarMarcador(comisaria, true);
-        agregarItem(comisaria, comMarker);
-
-        if (comisaria.subunidades) {
-          comisaria.subunidades.forEach(sub => {
-            const subMarker = agregarMarcador(sub, false);
-            agregarItem(sub, subMarker, true);
-          });
-        }
-      });
-
-      document.getElementById('buscador').addEventListener('input', e => {
-        const valor = e.target.value.toLowerCase();
-        document.querySelectorAll('#listaUnidades li').forEach(li => {
-          li.style.display = li.textContent.toLowerCase().includes(valor) ? '' : 'none';
+            if (comisaria.subunidades) {
+              comisaria.subunidades.forEach(sub => {
+                if (sub.lat && sub.lng) {
+                  const subMarker = L.marker([sub.lat, sub.lng], {
+                    icon: L.icon({
+                      iconUrl: "https://cdn-icons-png.flaticon.com/512/684/684908.png",
+                      iconSize: [24, 24],
+                    }),
+                  }).addTo(map)
+                    .bindPopup(`<strong>${sub.nombre}</strong>`);
+                  marcadores.push({ nombre: sub.nombre, marker: subMarker });
+                }
+              });
+            }
+          }
         });
       });
-    }
 
-    function agregarMarcador(unidad, isPrincipal) {
-      const { nombre, lat, lng } = unidad;
-      const marker = L.marker([lat, lng], { icon: iconoUnidad })
-        .addTo(map)
-        .bindPopup(`<strong>${nombre}</strong>`);
-      markers.push(marker);
-      return marker;
-    }
-
-    function agregarItem(unidad, marker, esSub = false) {
-      const li = document.createElement('li');
-      li.textContent = unidad.nombre;
-      if (esSub) li.style.paddingLeft = "16px";
-      li.onclick = () => {
-        map.setView([unidad.lat, unidad.lng], 16);
-        marker.openPopup();
-      };
-      document.getElementById("listaUnidades").appendChild(li);
-    }
-
-    cargarUnidades();
+    document.getElementById("buscador").addEventListener("input", e => {
+      const valor = e.target.value.toLowerCase();
+      marcadores.forEach(obj => {
+        if (obj.nombre.toLowerCase().includes(valor)) {
+          obj.marker.openPopup();
+          map.setView(obj.marker.getLatLng(), 15);
+        }
+      });
+    });
   </script>
 </body>
 </html>
