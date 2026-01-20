@@ -1,14 +1,16 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mapa Rutas Rápidas</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <style>
     html, body {
-      height: 100%;
       margin: 0;
+      padding: 0;
+      height: 100%;
     }
 
     #map {
@@ -17,41 +19,79 @@
     }
 
     .leaflet-top.leaflet-left {
-      bottom: 10px !important;
+      bottom: 70px !important;
       top: auto !important;
       left: 10px !important;
-      right: auto !important;
       flex-direction: column;
     }
 
-    .leaflet-control-zoom {
-      box-shadow: none;
+    .search-box {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      background: white;
+      padding: 8px 12px;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
     }
 
-    .leaflet-bar a {
-      background-color: white;
-      color: black;
+    .search-box input {
+      width: 250px;
+      padding: 6px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    @media (max-width: 600px) {
+      .search-box input {
+        width: 90vw;
+      }
     }
   </style>
 </head>
 <body>
   <div id="map"></div>
+  <div class="search-box">
+    <input type="text" id="buscador" placeholder="🔍 Buscar hospital o SAR..." />
+  </div>
 
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
-    // Crear mapa centrado en Santiago
     const map = L.map('map').setView([-33.45, -70.66], 12);
 
-    // Agregar capa base de OpenStreetMap
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; OpenStreetMap contributors'
+      maxZoom: 19,
+      attribution: '© OpenStreetMap'
     }).addTo(map);
 
-    // Marcador de ejemplo
-    L.marker([-33.45, -70.66])
-      .addTo(map)
-      .bindPopup('Comisaría Central')
-      .openPopup();
+    const marcadores = [];
+
+    fetch("puntos-rutas-rapidas.json")
+      .then(res => res.json())
+      .then(data => {
+        data.forEach(p => {
+          const marker = L.marker([p.lat, p.lng])
+            .addTo(map)
+            .bindPopup(`
+              <strong>${p.nombre}</strong><br>
+              <a href="https://www.google.com/maps/search/?api=1&query=${p.lat},${p.lng}" target="_blank">📍 Ver en Google Maps</a>
+            `);
+          marcadores.push({ nombre: p.nombre.toLowerCase(), marker });
+        });
+      });
+
+    document.getElementById("buscador").addEventListener("input", e => {
+      const valor = e.target.value.toLowerCase();
+      marcadores.forEach(({ nombre, marker }) => {
+        if (nombre.includes(valor)) {
+          map.setView(marker.getLatLng(), 16);
+          marker.openPopup();
+        }
+      });
+    });
   </script>
 </body>
 </html>
