@@ -3,106 +3,55 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Rutas Rápidas - Mapa</title>
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
-    integrity="sha384-sA+z0pTXa+DdJ+2BKwD31V1yQGdUoRFeVsfsfgQz3ZoE+m3HYGkYowZR1W8zvxug"
-    crossorigin=""
-  />
+  <title>Mapa Rutas Rápidas</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <style>
     html, body {
-      margin: 0;
-      padding: 0;
       height: 100%;
+      margin: 0;
     }
 
     #map {
-      height: 100%;
-      width: 100%;
+      height: 100vh;
+      width: 100vw;
     }
 
     .leaflet-top.leaflet-left {
-      top: auto !important;
       bottom: 10px !important;
+      top: auto !important;
       left: 10px !important;
+      right: auto !important;
+      flex-direction: column;
     }
 
     .leaflet-control-zoom {
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      box-shadow: none;
     }
 
-    .leaflet-control-container .leaflet-top {
-      z-index: 1000;
-    }
-
-    .custom-control {
-      background: white;
-      padding: 10px;
-      font-family: sans-serif;
-      font-weight: bold;
-      border-radius: 5px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-      margin: 10px;
-    }
-
-    .custom-control input {
-      width: 100%;
-      padding: 6px;
-      margin-top: 5px;
-      font-size: 14px;
+    .leaflet-bar a {
+      background-color: white;
+      color: black;
     }
   </style>
 </head>
 <body>
   <div id="map"></div>
 
-  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha384-WnvUQGvMbGG0m9wtxSkK3yoGJUrjOuvCPTJGyZwG+Aj6k+jqRkt4cWyZOh0Ra7xD" crossorigin=""></script>
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script>
-    const map = L.map('map').setView([-33.45, -70.6667], 12);
+    // Crear mapa centrado en Santiago
+    const map = L.map('map').setView([-33.45, -70.66], 12);
 
+    // Agregar capa base de OpenStreetMap
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
 
-    const control = L.control({ position: 'topleft' });
-
-    control.onAdd = function (map) {
-      const div = L.DomUtil.create('div', 'custom-control');
-      div.innerHTML = `
-        <div>🔍 <strong>Rutas Rápidas</strong><br />
-        <input type="text" id="searchBox" placeholder="Buscar unidad...">
-        </div>
-      `;
-      return div;
-    };
-
-    control.addTo(map);
-
-    // Cargar datos desde JSON
-    fetch("puntos-rutas-rapidas.json")
-      .then((res) => res.json())
-      .then((data) => {
-        const markers = [];
-
-        data.forEach((item) => {
-          const marker = L.marker([item.lat, item.lng])
-            .bindPopup(`<strong>${item.nombre}</strong><br>${item.tipo}`);
-          marker.addTo(map);
-          markers.push({ marker, nombre: item.nombre.toLowerCase() });
-        });
-
-        document.getElementById("searchBox").addEventListener("input", function () {
-          const query = this.value.toLowerCase();
-          markers.forEach(({ marker, nombre }) => {
-            if (nombre.includes(query)) {
-              marker.openPopup();
-              map.setView(marker.getLatLng(), 16);
-            }
-          });
-        });
-      });
+    // Marcador de ejemplo
+    L.marker([-33.45, -70.66])
+      .addTo(map)
+      .bindPopup('Comisaría Central')
+      .openPopup();
   </script>
 </body>
 </html>
