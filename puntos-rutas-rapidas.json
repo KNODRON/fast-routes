@@ -1,14 +1,52 @@
-{
-    "urgencias": [
-    { "nombre": "Hospital Sótero del Río", "coords": "-33.562738,-70.590708" },
-    { "nombre": "Hospital El Carmen Maipú", "coords": "-33.510765,-70.768563" },
-    { "nombre": "Hospital San José", "coords": "-33.396722,-70.649539" },
-    { "nombre": "Hospital Barros Luco", "coords": "-33.510365,-70.645882" },
-    { "nombre": "Hospital Clínico Universidad de Chile", "coords": "-33.431352,-70.651189" },
-    { "nombre": "Hospital de Urgencia Asistencia Pública (Posta Central)", "coords": "-33.448777,-70.653952" },
-    { "nombre": "Hospital Exequiel González Cortés", "coords": "-33.509430,-70.663936" },
-    { "nombre": "CRS Cordillera", "coords": "-33.579145,-70.579423" },
-    { "nombre": "SAPU La Florida", "coords": "-33.527005,-70.561206" },
-    { "nombre": "SAPU Lo Hermida", "coords": "-33.488470,-70.565624" }
-  ]
-}
+[
+  {
+    "nombre": "Hospital S\u00f3tero del R\u00edo",
+    "lat": -33.562738,
+    "lng": -70.590708
+  },
+  {
+    "nombre": "Hospital El Carmen Maip\u00fa",
+    "lat": -33.510765,
+    "lng": -70.768563
+  },
+  {
+    "nombre": "Hospital San Jos\u00e9",
+    "lat": -33.396722,
+    "lng": -70.649539
+  },
+  {
+    "nombre": "Hospital Barros Luco",
+    "lat": -33.510365,
+    "lng": -70.645882
+  },
+  {
+    "nombre": "Hospital Cl\u00ednico Universidad de Chile",
+    "lat": -33.431352,
+    "lng": -70.651189
+  },
+  {
+    "nombre": "Hospital de Urgencia Asistencia P\u00fablica (Posta Central)",
+    "lat": -33.448777,
+    "lng": -70.653952
+  },
+  {
+    "nombre": "Hospital Exequiel Gonz\u00e1lez Cort\u00e9s",
+    "lat": -33.50943,
+    "lng": -70.663936
+  },
+  {
+    "nombre": "CRS Cordillera",
+    "lat": -33.579145,
+    "lng": -70.579423
+  },
+  {
+    "nombre": "SAPU La Florida",
+    "lat": -33.527005,
+    "lng": -70.561206
+  },
+  {
+    "nombre": "SAPU Lo Hermida",
+    "lat": -33.48847,
+    "lng": -70.565624
+  }
+]
