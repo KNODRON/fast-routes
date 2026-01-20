@@ -1,0 +1,43 @@
+[
+  {
+    "nombre": "1ª COMISARÍA SANTIAGO",
+    "coords": "-33.435887, -70.647587",
+    "prefectura": "SANTIAGO CENTRAL",
+    "subunidades": [
+      {
+        "nombre": "SUBCOMISARÍA STGO CENTRO",
+        "coords": "-33.436100, -70.648000"
+      },
+      {
+        "nombre": "RETEN EL CENTRO",
+        "coords": "-33.436500, -70.648500"
+      }
+    ]
+  },
+  {
+    "nombre": "2ª COMISARÍA SANTIAGO",
+    "coords": "-33.45460463686459, -70.66801477142103",
+    "prefectura": "SANTIAGO CENTRAL"
+  },
+  {
+    "nombre": "3ª COMISARÍA SANTIAGO",
+    "coords": "-33.441597, -70.658488",
+    "prefectura": "SANTIAGO CENTRAL"
+  },
+  {
+    "nombre": "5ª COMISARÍA CONCHALI",
+    "coords": "-33.389895, -70.660225",
+    "prefectura": "SANTIAGO NORTE",
+    "subunidades": [
+      {
+        "nombre": "RETÉN CHACABUCO",
+        "coords": "-33.390000, -70.661000"
+      }
+    ]
+  },
+  {
+    "nombre": "6ª COMISARÍA RECOLETA",
+    "coords": "-33.409346, -70.641911",
+    "prefectura": "SANTIAGO NORTE"
+  }
+]
