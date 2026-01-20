@@ -1,96 +1,103 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mapa Rutas Rápidas</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <title>Mapa de Unidades de Carabineros</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <style>
     html, body {
       margin: 0;
-      padding: 0;
       height: 100%;
+      font-family: sans-serif;
     }
-
     #map {
-      height: 100vh;
-      width: 100vw;
+      height: 100%;
+      width: 100%;
     }
-
-    .leaflet-top.leaflet-left {
-      bottom: 70px !important;
+    .leaflet-control-zoom {
+      bottom: 80px !important;
       top: auto !important;
       left: 10px !important;
-      flex-direction: column;
+      right: auto !important;
     }
-
-    .search-box {
+    #buscador {
       position: absolute;
       top: 10px;
       left: 50%;
       transform: translateX(-50%);
       z-index: 1000;
-      background: white;
-      padding: 8px 12px;
-      border-radius: 6px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      width: 90%;
+      max-width: 400px;
     }
-
-    .search-box input {
-      width: 250px;
-      padding: 6px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      font-size: 14px;
-    }
-
-    @media (max-width: 600px) {
-      .search-box input {
-        width: 90vw;
-      }
+    #buscador input {
+      width: 100%;
+      padding: 8px;
+      font-size: 16px;
     }
   </style>
 </head>
 <body>
-  <div id="map"></div>
-  <div class="search-box">
-    <input type="text" id="buscador" placeholder="🔍 Buscar hospital o SAR..." />
+  <div id="buscador">
+    <input type="text" id="inputBusqueda" placeholder="Buscar unidad..." />
   </div>
+  <div id="map"></div>
 
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script>
-    const map = L.map('map').setView([-33.45, -70.66], 12);
+    const map = L.map('map').setView([-33.4489, -70.6693], 12);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
-      attribution: '© OpenStreetMap'
     }).addTo(map);
 
-    const marcadores = [];
+    let markers = [];
 
-    fetch("puntos-rutas-rapidas.json")
-      .then(res => res.json())
-      .then(data => {
-        data.forEach(p => {
-          const marker = L.marker([p.lat, p.lng])
-            .addTo(map)
-            .bindPopup(`
-              <strong>${p.nombre}</strong><br>
-              <a href="https://www.google.com/maps/search/?api=1&query=${p.lat},${p.lng}" target="_blank">📍 Ver en Google Maps</a>
-            `);
-          marcadores.push({ nombre: p.nombre.toLowerCase(), marker });
-        });
-      });
+    async function cargarUnidades() {
+      const response = await fetch("https://knodron.github.io/fast-routes/unidades_carabineros.json");
+      const unidades = await response.json();
 
-    document.getElementById("buscador").addEventListener("input", e => {
-      const valor = e.target.value.toLowerCase();
-      marcadores.forEach(({ nombre, marker }) => {
-        if (nombre.includes(valor)) {
-          map.setView(marker.getLatLng(), 16);
-          marker.openPopup();
+      unidades.forEach(unidad => {
+        const [lat, lng] = unidad.coords.split(",").map(c => parseFloat(c.trim()));
+        const marker = L.marker([lat, lng]).addTo(map);
+        marker.bindPopup(`<strong>${unidad.nombre}</strong><br>${unidad.prefectura || ''}`);
+        markers.push({ marker, nombre: unidad.nombre.toLowerCase() });
+
+        if (unidad.subunidades) {
+          unidad.subunidades.forEach(sub => {
+            const [sLat, sLng] = sub.coords.split(",").map(c => parseFloat(c.trim()));
+            const subMarker = L.circleMarker([sLat, sLng], {
+              radius: 6,
+              color: "green",
+              fillColor: "#3f0",
+              fillOpacity: 0.9
+            }).addTo(map);
+            subMarker.bindPopup(`<strong>${sub.nombre}</strong><br>Depende de: ${unidad.nombre}`);
+            markers.push({ marker: subMarker, nombre: sub.nombre.toLowerCase() });
+          });
         }
       });
+    }
+
+    cargarUnidades();
+
+    const inputBusqueda = document.getElementById("inputBusqueda");
+    inputBusqueda.addEventListener("input", () => {
+      const texto = inputBusqueda.value.toLowerCase();
+      markers.forEach(({ marker, nombre }) => {
+        if (nombre.includes(texto)) {
+          marker.setStyle?.({ opacity: 1, fillOpacity: 0.9 }) || marker.setOpacity(1);
+          marker.openPopup();
+        } else {
+          marker.setStyle?.({ opacity: 0.1, fillOpacity: 0.1 }) || marker.setOpacity(0.1);
+        }
+      });
+
+      if (!texto) {
+        markers.forEach(({ marker }) => {
+          marker.setStyle?.({ opacity: 1, fillOpacity: 0.9 }) || marker.setOpacity(1);
+        });
+      }
     });
   </script>
 </body>
