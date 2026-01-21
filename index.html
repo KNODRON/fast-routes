@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -88,9 +87,7 @@
 
   <button class="main-button" onclick="mostrarUnidades()">👮‍♂️ Comisarías</button>
   <a href="mapa.html">
-  <button class="boton-principal">
-    🗺️ Ver Mapa
-  </button>
+  <button class="main-button">🗺️ Ver Mapa</button>
   </a>
   <button class="main-button" onclick="abrirUrgencias()">🚑 Urgencias</button>
   <button class="main-button" onclick="abrirEmergencia()">🆘 Emergencia</button>
@@ -108,7 +105,7 @@
       input.value = '';
       input.style.display = 'block';
 
-      const res = await fetch('https://raw.githubusercontent.com/KNODRON/fast-routes/main/unidades_carabineros_jerarquico.json');
+      const res = await fetch('unidades_carabineros.json');
       const data = await res.json();
       dataGlobal = data;
 
@@ -125,7 +122,6 @@
       const subDivContainer = document.createElement('div');
       subDivContainer.className = 'subcontenedor';
 
-      // Botón de ubicación de la comisaría
       const ubicacionBtn = document.createElement('button');
       ubicacionBtn.className = 'btn-ubicacion';
       ubicacionBtn.innerText = '📍 Ver ubicación comisaría';
@@ -135,7 +131,6 @@
       };
       subDivContainer.appendChild(ubicacionBtn);
 
-      // Subunidades si existen
       if (unidad.subunidades) {
         unidad.subunidades.forEach(sub => {
           const subDiv = document.createElement('div');
