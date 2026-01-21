@@ -2,17 +2,7 @@
   {
     "nombre": "1ª COMISARÍA SANTIAGO",
     "coords": "-33.435887, -70.647587",
-    "prefectura": "SANTIAGO CENTRAL",
-    "subunidades": [
-      {
-        "nombre": "SUBCOMISARÍA STGO CENTRO",
-        "coords": "-33.436100, -70.648000"
-      },
-      {
-        "nombre": "RETEN EL CENTRO",
-        "coords": "-33.436500, -70.648500"
-      }
-    ]
+    "prefectura": "SANTIAGO CENTRAL"
   },
   {
     "nombre": "2ª COMISARÍA SANTIAGO",
@@ -25,19 +15,48 @@
     "prefectura": "SANTIAGO CENTRAL"
   },
   {
+    "nombre": "4ª COMISARÍA SANTIAGO",
+    "coords": "-33.465215, -70.645572",
+    "prefectura": "SANTIAGO CENTRAL"
+  },
+  {
     "nombre": "5ª COMISARÍA CONCHALI",
     "coords": "-33.389895, -70.660225",
-    "prefectura": "SANTIAGO NORTE",
-    "subunidades": [
-      {
-        "nombre": "RETÉN CHACABUCO",
-        "coords": "-33.390000, -70.661000"
-      }
-    ]
+    "prefectura": "SANTIAGO NORTE"
   },
   {
     "nombre": "6ª COMISARÍA RECOLETA",
     "coords": "-33.409346, -70.641911",
     "prefectura": "SANTIAGO NORTE"
+  },
+  {
+    "nombre": "8ª COMISARÍA COLINA",
+    "coords": "-33.204530, -70.682758",
+    "prefectura": "SANTIAGO NORTE"
+  },
+  {
+    "nombre": "9ª COMISARÍA INDEPENDENCIA",
+    "coords": "-33.406817, -70.657122",
+    "prefectura": "SANTIAGO NORTE"
+  },
+  {
+    "nombre": "21ª COMISARÍA ESTACION CENTRAL",
+    "coords": "-33.451400, -70.692456",
+    "prefectura": "SANTIAGO CENTRAL"
+  },
+  {
+    "nombre": "48ª COMISARÍA A. FAMILIA",
+    "coords": "-33.450101320256934, -70.65748454599557",
+    "prefectura": "SANTIAGO CENTRAL"
+  },
+  {
+    "nombre": "57ª COMISARÍA MOTORIZADA",
+    "coords": "-33.417789, -70.661393",
+    "prefectura": "SANTIAGO NORTE"
+  },
+  {
+    "nombre": "58ª COMISARÍA POB. ALESSANDRI",
+    "coords": "-33.469834, -70.698998",
+    "prefectura": "SANTIAGO CENTRAL"
   }
 ]
