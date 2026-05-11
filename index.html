@@ -5,171 +5,317 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Rutas Rápidas</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #ffffff;
-      color: #003b1f;
-      padding: 20px;
-      text-align: center;
+    :root{
+      --verde:#00754a;
+      --verde-oscuro:#005131;
+      --verde-profundo:#003b1f;
+      --fondo:#f4f7f5;
+      --card:#ffffff;
+      --borde:#d7e5dc;
+      --texto:#0f2f22;
+      --gris:#6b7280;
+      --rojo:#b91c1c;
     }
 
-    h1 {
-      color: #005131;
+    *{ box-sizing:border-box; }
+
+    body{
+      margin:0;
+      font-family:Arial, sans-serif;
+      background:var(--fondo);
+      color:var(--texto);
+      text-align:center;
+      padding:18px;
     }
 
-    .main-button {
-      display: block;
-      width: 80%;
-      max-width: 400px;
-      margin: 10px auto;
-      padding: 15px;
-      font-size: 18px;
-      background-color: #00754a;
-      color: white;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
+    h1{
+      color:var(--verde-oscuro);
+      margin:12px 0 4px;
+      font-size:30px;
     }
 
-    .main-button:hover {
-      background-color: #005131;
+    .subtitulo{
+      margin:0 0 18px;
+      color:var(--gris);
+      font-size:14px;
     }
 
-    #search {
-      width: 80%;
-      max-width: 500px;
-      padding: 10px;
-      margin: 20px auto;
-      border-radius: 6px;
-      border: 1px solid #00754a;
-      display: none;
+    .main-button{
+      display:block;
+      width:92%;
+      max-width:430px;
+      margin:10px auto;
+      padding:16px;
+      font-size:18px;
+      font-weight:bold;
+      background:var(--verde);
+      color:#fff;
+      border:none;
+      border-radius:14px;
+      cursor:pointer;
+      box-shadow:0 4px 12px rgba(0,0,0,.12);
     }
 
-    .unidad, .subunidad {
-      background-color: #e7f5ef;
-      border: 1px solid #00754a;
-      margin: 6px auto;
-      padding: 12px;
-      border-radius: 6px;
-      max-width: 90%;
-      text-align: left;
-      cursor: pointer;
+    .main-button:hover{ background:var(--verde-oscuro); }
+
+    .emergencia{
+      background:var(--rojo);
     }
 
-    .subunidad {
-      margin-left: 30px;
-      font-size: 14px;
+    .emergencia:hover{
+      background:#7f1d1d;
     }
 
-    .btn-ubicacion {
-      background-color: #005131;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      padding: 6px 12px;
-      margin-top: 6px;
-      font-size: 14px;
-      cursor: pointer;
+    #search{
+      width:92%;
+      max-width:520px;
+      padding:13px;
+      margin:18px auto 12px;
+      border-radius:12px;
+      border:1px solid var(--verde);
+      display:none;
+      font-size:16px;
+      outline:none;
+      background:#fff;
     }
 
-    .btn-ubicacion:hover {
-      background-color: #003b1f;
+    #contenedor{
+      width:100%;
+      max-width:760px;
+      margin:0 auto;
+      padding-bottom:30px;
     }
 
-    .subcontenedor {
-      margin-bottom: 20px;
+    .unidad{
+      background:var(--card);
+      border:1px solid var(--borde);
+      border-left:6px solid var(--verde);
+      margin:8px auto;
+      padding:13px;
+      border-radius:12px;
+      text-align:left;
+      cursor:pointer;
+      box-shadow:0 2px 8px rgba(0,0,0,.06);
+    }
+
+    .unidad strong{
+      display:block;
+      color:var(--verde-profundo);
+      font-size:16px;
+    }
+
+    .meta{
+      display:block;
+      margin-top:4px;
+      color:var(--gris);
+      font-size:13px;
+      line-height:1.3;
+    }
+
+    .panel-acciones{
+      background:#e7f5ef;
+      border:1px solid var(--borde);
+      border-radius:12px;
+      padding:10px;
+      margin:-2px auto 10px;
+      text-align:left;
+    }
+
+    .btn-accion{
+      width:100%;
+      margin:5px 0;
+      padding:11px;
+      border:0;
+      border-radius:10px;
+      background:var(--verde-oscuro);
+      color:#fff;
+      font-weight:bold;
+      cursor:pointer;
+      font-size:15px;
+      text-align:center;
+    }
+
+    .btn-accion.secundario{
+      background:#155e75;
+    }
+
+    .btn-accion:hover{ filter:brightness(.92); }
+
+    .contador{
+      color:var(--gris);
+      font-size:13px;
+      margin:8px 0 10px;
     }
   </style>
 </head>
 <body>
   <h1>Rutas Rápidas</h1>
+  <p class="subtitulo">Acceso rápido a cuarteles y urgencias RM</p>
 
-  <button class="main-button" onclick="mostrarUnidades()">👮‍♂️ Comisarías</button>
-  <a href="mapa.html">
-  <button class="main-button">🗺️ Ver Mapa</button>
-  </a>
-  <button class="main-button" onclick="abrirUrgencias()">🚑 Urgencias</button>
-  <button class="main-button" onclick="abrirEmergencia()">🆘 Emergencia</button>
+  <button class="main-button" onclick="mostrarCuarteles()">👮‍♂️ Comisarías / Cuarteles</button>
+  <button class="main-button" onclick="location.href='mapa.html'">🗺️ Ver Mapa</button>
+  <button class="main-button" onclick="mostrarUrgencias()">🚑 Urgencias</button>
+  <button class="main-button emergencia" onclick="abrirEmergencia()">🆘 Emergencia</button>
 
-  <input type="text" id="search" placeholder="🔍 Buscar comisaría, tenencia o reten..." onkeyup="filtrarUnidades()">
+  <input type="text" id="search" placeholder="🔍 Buscar por nombre, comuna, prefectura o tipo..." onkeyup="filtrarListado()">
 
   <div id="contenedor"></div>
 
   <script>
-    let dataGlobal = [];
+    let listadoActual = [];
+    let modoActual = "";
 
-    async function mostrarUnidades() {
-      document.getElementById('contenedor').innerHTML = '';
-      const input = document.getElementById('search');
-      input.value = '';
-      input.style.display = 'block';
-
-      const res = await fetch('unidades_carabineros.json');
-      const data = await res.json();
-      dataGlobal = data;
-
-      data.forEach((unidad, index) => {
-        const div = document.createElement('div');
-        div.className = 'unidad';
-        div.innerText = unidad.nombre;
-        div.onclick = () => mostrarSubunidades(index, unidad);
-        document.getElementById('contenedor').appendChild(div);
-      });
+    function navegar(coords){
+      window.open(`https://www.google.com/maps/search/?api=1&query=${coords}`, "_blank");
     }
 
-    function mostrarSubunidades(index, unidad) {
-      const subDivContainer = document.createElement('div');
-      subDivContainer.className = 'subcontenedor';
-
-      const ubicacionBtn = document.createElement('button');
-      ubicacionBtn.className = 'btn-ubicacion';
-      ubicacionBtn.innerText = '📍 Ver ubicación comisaría';
-      ubicacionBtn.onclick = (e) => {
-        e.stopPropagation();
-        window.open(`https://www.google.com/maps/place/${unidad.coords}`, '_blank');
-      };
-      subDivContainer.appendChild(ubicacionBtn);
-
-      if (unidad.subunidades) {
-        unidad.subunidades.forEach(sub => {
-          const subDiv = document.createElement('div');
-          subDiv.className = 'subunidad';
-          subDiv.textContent = sub.nombre;
-          subDiv.onclick = () => window.open(`https://www.google.com/maps/place/${sub.coords}`, '_blank');
-          subDivContainer.appendChild(subDiv);
-        });
-      }
-
-      const contenedor = document.getElementById('contenedor');
-      const todas = contenedor.querySelectorAll('.subcontenedor');
-      todas.forEach(el => el.remove());
-      contenedor.children[index].after(subDivContainer);
+    async function cargarJSON(url){
+      const res = await fetch(url + "?v=" + Date.now());
+      if(!res.ok) throw new Error("No se pudo cargar " + url);
+      return await res.json();
     }
 
-    function abrirUrgencias() {
-      window.open('https://www.google.com/maps/search/SAR', '_blank');
+    function mostrarBusqueda(){
+      const input = document.getElementById("search");
+      input.value = "";
+      input.style.display = "block";
     }
 
-    function abrirEmergencia() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(pos => {
-          const { latitude, longitude } = pos.coords;
-          window.open(`https://www.google.com/maps/search/hospital+de+urgencia/@${latitude},${longitude},14z`, '_blank');
-        }, () => {
-          window.open('https://www.google.com/maps/search/?api=1&query=hospital+de+urgencia+Santiago', '_blank');
-        });
-      } else {
-        window.open('https://www.google.com/maps/search/?api=1&query=hospital+de+urgencia+Santiago', '_blank');
+    function ocultarBusqueda(){
+      document.getElementById("search").style.display = "none";
+    }
+
+    async function mostrarCuarteles(){
+      modoActual = "cuarteles";
+      mostrarBusqueda();
+      const contenedor = document.getElementById("contenedor");
+      contenedor.innerHTML = "<p>Cargando cuarteles...</p>";
+
+      try{
+        listadoActual = await cargarJSON("cuarteles_rm.json");
+        renderCuarteles(listadoActual);
+      }catch(e){
+        contenedor.innerHTML = "<p style='color:red'>Error al cargar cuarteles_rm.json</p>";
+        console.error(e);
       }
     }
 
-    function filtrarUnidades() {
-      const valor = document.getElementById('search').value.toLowerCase();
-      const divs = document.querySelectorAll('.unidad, .subunidad');
-      divs.forEach(div => {
-        div.style.display = div.textContent.toLowerCase().includes(valor) ? 'block' : 'none';
+    function renderCuarteles(data){
+      const contenedor = document.getElementById("contenedor");
+      contenedor.innerHTML = `<div class="contador">${data.length} cuarteles encontrados</div>`;
+
+      data.forEach((u, index)=>{
+        const div = document.createElement("div");
+        div.className = "unidad";
+        div.dataset.texto = `${u.nombre} ${u.tipo || ""} ${u.comuna || ""} ${u.prefectura || ""} ${u.direccion || ""}`.toLowerCase();
+
+        div.innerHTML = `
+          <strong>${u.nombre}</strong>
+          <span class="meta">${u.tipo || "Unidad"} · ${u.comuna || ""}</span>
+          <span class="meta">${u.prefectura || ""}</span>
+        `;
+
+        div.onclick = () => mostrarAccionesCuartel(index, u);
+        contenedor.appendChild(div);
       });
+    }
+
+    function mostrarAccionesCuartel(index, u){
+      document.querySelectorAll(".panel-acciones").forEach(el => el.remove());
+
+      const panel = document.createElement("div");
+      panel.className = "panel-acciones";
+      panel.innerHTML = `
+        <strong>${u.nombre}</strong>
+        <span class="meta">${u.tipo || ""} · ${u.comuna || ""}</span>
+        <span class="meta">${u.direccion || ""}</span>
+        <button class="btn-accion" onclick="event.stopPropagation(); navegar('${u.coords}')">📍 Navegar a esta unidad</button>
+        <button class="btn-accion secundario" onclick="event.stopPropagation(); abrirMapaUnidad(${u.lat}, ${u.lng})">🗺️ Ver en mapa</button>
+      `;
+
+      const unidadesVisibles = Array.from(document.querySelectorAll(".unidad")).filter(el => el.style.display !== "none");
+      const item = unidadesVisibles.find(el => el.querySelector("strong").textContent === u.nombre);
+      if(item) item.after(panel);
+    }
+
+    async function mostrarUrgencias(){
+      modoActual = "urgencias";
+      mostrarBusqueda();
+      const contenedor = document.getElementById("contenedor");
+      contenedor.innerHTML = "<p>Cargando urgencias...</p>";
+
+      try{
+        listadoActual = await cargarJSON("salud_rm_urgencias.json");
+        renderUrgencias(listadoActual);
+      }catch(e){
+        contenedor.innerHTML = "<p style='color:red'>Error al cargar salud_rm_urgencias.json</p>";
+        console.error(e);
+      }
+    }
+
+    function renderUrgencias(data){
+      const contenedor = document.getElementById("contenedor");
+      contenedor.innerHTML = `<div class="contador">${data.length} establecimientos encontrados</div>`;
+
+      data.forEach((u, index)=>{
+        const div = document.createElement("div");
+        div.className = "unidad";
+        div.dataset.texto = `${u.nombre} ${u.tipo || ""} ${u.tipo_urgencia || ""} ${u.comuna || ""} ${u.direccion || ""}`.toLowerCase();
+
+        div.innerHTML = `
+          <strong>${u.nombre}</strong>
+          <span class="meta">${u.tipo || ""} · ${u.comuna || ""}</span>
+          <span class="meta">${u.tipo_urgencia || ""}</span>
+        `;
+
+        div.onclick = () => mostrarAccionesUrgencia(index, u);
+        contenedor.appendChild(div);
+      });
+    }
+
+    function mostrarAccionesUrgencia(index, u){
+      document.querySelectorAll(".panel-acciones").forEach(el => el.remove());
+
+      const panel = document.createElement("div");
+      panel.className = "panel-acciones";
+      panel.innerHTML = `
+        <strong>${u.nombre}</strong>
+        <span class="meta">${u.tipo || ""} · ${u.comuna || ""}</span>
+        <span class="meta">${u.direccion || ""}</span>
+        <button class="btn-accion" onclick="event.stopPropagation(); navegar('${u.coords}')">📍 Navegar a este centro</button>
+        <button class="btn-accion secundario" onclick="event.stopPropagation(); abrirMapaUnidad(${u.lat}, ${u.lng})">🗺️ Ver en mapa</button>
+      `;
+
+      const unidadesVisibles = Array.from(document.querySelectorAll(".unidad")).filter(el => el.style.display !== "none");
+      const item = unidadesVisibles.find(el => el.querySelector("strong").textContent === u.nombre);
+      if(item) item.after(panel);
+    }
+
+    function filtrarListado(){
+      const valor = document.getElementById("search").value.toLowerCase().trim();
+      document.querySelectorAll(".panel-acciones").forEach(el => el.remove());
+
+      document.querySelectorAll(".unidad").forEach(div=>{
+        div.style.display = div.dataset.texto.includes(valor) ? "block" : "none";
+      });
+    }
+
+    function abrirMapaUnidad(lat, lng){
+      location.href = `mapa.html?lat=${lat}&lng=${lng}&z=17`;
+    }
+
+    function abrirEmergencia(){
+      if(navigator.geolocation){
+        navigator.geolocation.getCurrentPosition(pos=>{
+          const lat = pos.coords.latitude;
+          const lng = pos.coords.longitude;
+          window.open(`https://www.google.com/maps/search/hospital+de+urgencia/@${lat},${lng},14z`, "_blank");
+        }, ()=>{
+          window.open("https://www.google.com/maps/search/hospital+de+urgencia+Santiago", "_blank");
+        });
+      }else{
+        window.open("https://www.google.com/maps/search/hospital+de+urgencia+Santiago", "_blank");
+      }
     }
   </script>
 </body>
