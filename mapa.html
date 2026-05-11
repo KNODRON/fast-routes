@@ -19,52 +19,43 @@
     }
 
     .leaflet-top.leaflet-left{
-      bottom:80px !important;
+      bottom:82px !important;
       top:auto !important;
       left:10px !important;
     }
 
-    .search-box{
+    .top-panel{
       position:absolute;
       top:10px;
       left:50%;
       transform:translateX(-50%);
       z-index:1000;
       width:92vw;
-      max-width:440px;
-      background:white;
-      padding:8px;
-      border-radius:12px;
-      box-shadow:0 3px 12px rgba(0,0,0,.25);
+      max-width:460px;
     }
 
-    .search-box input{
+    .top-panel input{
       width:100%;
-      padding:10px;
+      padding:12px;
       border:1px solid #00754a;
-      border-radius:9px;
+      border-radius:14px;
       font-size:15px;
       outline:none;
+      box-shadow:0 2px 10px rgba(0,0,0,.2);
       box-sizing:border-box;
     }
 
     .layer-buttons{
-      position:absolute;
-      top:68px;
-      left:50%;
-      transform:translateX(-50%);
-      z-index:1000;
-      display:flex;
+      margin-top:7px;
+      display:grid;
+      grid-template-columns:1fr 1fr 1fr;
       gap:7px;
-      width:92vw;
-      max-width:440px;
     }
 
-    .layer-buttons button{
-      flex:1;
-      padding:9px;
+    .layer-buttons button, .bottom-actions button{
+      padding:10px;
       border:0;
-      border-radius:10px;
+      border-radius:12px;
       font-weight:bold;
       color:white;
       cursor:pointer;
@@ -74,6 +65,20 @@
     .btn-carab{ background:#00754a; }
     .btn-salud{ background:#0e7490; }
     .btn-all{ background:#374151; }
+    .btn-emerg{ background:#b91c1c; }
+
+    .bottom-actions{
+      position:absolute;
+      bottom:12px;
+      left:50%;
+      transform:translateX(-50%);
+      z-index:1000;
+      width:92vw;
+      max-width:460px;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:8px;
+    }
 
     .popup-btn{
       display:block;
@@ -97,14 +102,18 @@
 <body>
   <div id="map"></div>
 
-  <div class="search-box">
+  <div class="top-panel">
     <input type="text" id="buscador" placeholder="🔍 Buscar cuartel, SAPU, hospital, comuna..." />
+    <div class="layer-buttons">
+      <button class="btn-carab" onclick="mostrarSolo('carabineros')">👮 Cuarteles</button>
+      <button class="btn-salud" onclick="mostrarSolo('salud')">🚑 Salud</button>
+      <button class="btn-all" onclick="mostrarSolo('todos')">Todos</button>
+    </div>
   </div>
 
-  <div class="layer-buttons">
-    <button class="btn-carab" onclick="mostrarSolo('carabineros')">👮 Cuarteles</button>
-    <button class="btn-salud" onclick="mostrarSolo('salud')">🚑 Salud</button>
-    <button class="btn-all" onclick="mostrarSolo('todos')">Todos</button>
+  <div class="bottom-actions">
+    <button class="btn-all" onclick="centrarMiUbicacion()">📍 Mi ubicación</button>
+    <button class="btn-emerg" onclick="irUrgenciaMasCercana()">🆘 Urgencia</button>
   </div>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -123,7 +132,9 @@
 
     const capaCarabineros = L.layerGroup().addTo(map);
     const capaSalud = L.layerGroup().addTo(map);
+    const capaMiUbicacion = L.layerGroup().addTo(map);
     const marcadores = [];
+    let saludGlobal = [];
 
     const iconCarabineros = L.divIcon({
       html:"<div style='background:#00754a;color:white;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;border:2px solid white;box-shadow:0 2px 6px #333;'>👮</div>",
@@ -149,15 +160,14 @@
       const tipo = item.tipo || "";
       const comuna = item.comuna || "";
       const direccion = item.direccion || "";
-      const prefectura = item.prefectura || "";
-      const extra = categoria === "carabineros" ? prefectura : (item.tipo_urgencia || "");
+      const extra = categoria === "carabineros" ? (item.prefectura || "") : (item.tipo_urgencia || "");
 
       return `
         <strong>${item.nombre}</strong><br>
         <span class="popup-meta">${tipo} · ${comuna}</span><br>
-        <span class="popup-meta">${extra || ""}</span><br>
+        <span class="popup-meta">${extra}</span><br>
         <span class="popup-meta">${direccion}</span>
-        <a class="popup-btn" target="_blank" href="https://www.google.com/maps/search/?api=1&query=${item.lat},${item.lng}">📍 Navegar</a>
+        <a class="popup-btn" target="_blank" href="https://www.google.com/maps/dir/?api=1&destination=${item.lat},${item.lng}&travelmode=driving">📍 Navegar</a>
       `;
     }
 
@@ -172,8 +182,36 @@
         .addTo(layer);
 
       const texto = `${item.nombre} ${item.tipo || ""} ${item.comuna || ""} ${item.direccion || ""} ${item.prefectura || ""} ${item.tipo_urgencia || ""}`.toLowerCase();
-
       marcadores.push({ marker, texto, categoria, item });
+    }
+
+    function esUrgenciaValida(u){
+      const texto = `${u.nombre||""} ${u.tipo||""} ${u.tipo_urgencia||""}`.toLowerCase();
+      const descartar = ["hospital digital","dirección servicio","actividades gestionadas","centro de salud familiar","cesfam","centro de salud privado"];
+      if(descartar.some(x => texto.includes(x))) return false;
+      return texto.includes("urgencia") || texto.includes("ueh") || texto.includes("sapu") || texto.includes("sar") || texto.includes("samu") || texto.includes("hospital") || texto.includes("posta");
+    }
+
+    function distanciaKm(lat1, lon1, lat2, lon2){
+      const R = 6371;
+      const dLat = (lat2-lat1) * Math.PI / 180;
+      const dLon = (lon2-lon1) * Math.PI / 180;
+      const a =
+        Math.sin(dLat/2) ** 2 +
+        Math.cos(lat1 * Math.PI/180) * Math.cos(lat2 * Math.PI/180) *
+        Math.sin(dLon/2) ** 2;
+      return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    }
+
+    function obtenerUbicacion(){
+      return new Promise((resolve, reject)=>{
+        if(!navigator.geolocation) return reject(new Error("Sin geolocalización"));
+        navigator.geolocation.getCurrentPosition(
+          pos => resolve({ lat: pos.coords.latitude, lng: pos.coords.longitude }),
+          err => reject(err),
+          { enableHighAccuracy:true, timeout:10000, maximumAge:30000 }
+        );
+      });
     }
 
     async function iniciar(){
@@ -181,16 +219,11 @@
         const cuarteles = await cargarJSON("cuarteles_rm.json");
         cuarteles.forEach(item => agregarMarcador(item, "carabineros"));
 
-        const salud = await cargarJSON("salud_rm_urgencias.json");
-        salud.forEach(item => agregarMarcador(item, "salud"));
+        saludGlobal = await cargarJSON("salud_rm_urgencias.json");
+        saludGlobal.forEach(item => agregarMarcador(item, "salud"));
 
         if(params.get("lat") && params.get("lng")){
-          setTimeout(()=> {
-            L.popup()
-              .setLatLng([startLat, startLng])
-              .setContent("Ubicación seleccionada")
-              .openOn(map);
-          }, 500);
+          L.popup().setLatLng([startLat, startLng]).setContent("Ubicación seleccionada").openOn(map);
         }
       }catch(e){
         alert("Error cargando capas. Revisa que estén cuarteles_rm.json y salud_rm_urgencias.json en GitHub.");
@@ -214,7 +247,6 @@
     document.getElementById("buscador").addEventListener("input", e=>{
       const valor = e.target.value.toLowerCase().trim();
       if(valor.length < 2) return;
-
       const encontrado = marcadores.find(m => m.texto.includes(valor));
       if(encontrado){
         const ll = encontrado.marker.getLatLng();
@@ -222,6 +254,39 @@
         encontrado.marker.openPopup();
       }
     });
+
+    async function centrarMiUbicacion(){
+      try{
+        const mi = await obtenerUbicacion();
+        capaMiUbicacion.clearLayers();
+        L.circleMarker([mi.lat, mi.lng], {
+          radius:8, color:"#2563eb", fillColor:"#60a5fa", fillOpacity:.9
+        }).addTo(capaMiUbicacion).bindPopup("📍 Mi ubicación").openPopup();
+        map.setView([mi.lat, mi.lng], 15);
+      }catch(e){
+        alert("No se pudo obtener tu ubicación. Revisa permisos GPS.");
+      }
+    }
+
+    async function irUrgenciaMasCercana(){
+      try{
+        const mi = await obtenerUbicacion();
+        const urgencias = saludGlobal
+          .filter(esUrgenciaValida)
+          .map(u => ({ ...u, distancia: distanciaKm(mi.lat, mi.lng, u.lat, u.lng) }))
+          .sort((a,b)=>a.distancia-b.distancia);
+
+        if(!urgencias.length){
+          alert("No se encontraron urgencias válidas.");
+          return;
+        }
+
+        const u = urgencias[0];
+        window.open(`https://www.google.com/maps/dir/?api=1&destination=${u.lat},${u.lng}&travelmode=driving`, "_blank");
+      }catch(e){
+        alert("No se pudo obtener tu ubicación. Revisa permisos GPS.");
+      }
+    }
 
     iniciar();
   </script>
