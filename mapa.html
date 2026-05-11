@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -7,92 +6,224 @@
   <title>Mapa Rutas Rápidas</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
+    html, body{
+      margin:0;
+      padding:0;
+      height:100%;
+      font-family:Arial, sans-serif;
     }
 
-    #map {
-      height: 100vh;
-      width: 100vw;
+    #map{
+      height:100vh;
+      width:100vw;
     }
 
-    .leaflet-top.leaflet-left {
-      bottom: 70px !important;
-      top: auto !important;
-      left: 10px !important;
-      flex-direction: column;
+    .leaflet-top.leaflet-left{
+      bottom:80px !important;
+      top:auto !important;
+      left:10px !important;
     }
 
-    .search-box {
-      position: absolute;
-      top: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 1000;
-      background: white;
-      padding: 8px 12px;
-      border-radius: 6px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    .search-box{
+      position:absolute;
+      top:10px;
+      left:50%;
+      transform:translateX(-50%);
+      z-index:1000;
+      width:92vw;
+      max-width:440px;
+      background:white;
+      padding:8px;
+      border-radius:12px;
+      box-shadow:0 3px 12px rgba(0,0,0,.25);
     }
 
-    .search-box input {
-      width: 250px;
-      padding: 6px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      font-size: 14px;
+    .search-box input{
+      width:100%;
+      padding:10px;
+      border:1px solid #00754a;
+      border-radius:9px;
+      font-size:15px;
+      outline:none;
+      box-sizing:border-box;
     }
 
-    @media (max-width: 600px) {
-      .search-box input {
-        width: 90vw;
-      }
+    .layer-buttons{
+      position:absolute;
+      top:68px;
+      left:50%;
+      transform:translateX(-50%);
+      z-index:1000;
+      display:flex;
+      gap:7px;
+      width:92vw;
+      max-width:440px;
+    }
+
+    .layer-buttons button{
+      flex:1;
+      padding:9px;
+      border:0;
+      border-radius:10px;
+      font-weight:bold;
+      color:white;
+      cursor:pointer;
+      box-shadow:0 2px 8px rgba(0,0,0,.2);
+    }
+
+    .btn-carab{ background:#00754a; }
+    .btn-salud{ background:#0e7490; }
+    .btn-all{ background:#374151; }
+
+    .popup-btn{
+      display:block;
+      margin-top:8px;
+      padding:8px;
+      background:#005131;
+      color:white !important;
+      text-decoration:none;
+      border-radius:8px;
+      text-align:center;
+      font-weight:bold;
+    }
+
+    .popup-meta{
+      color:#555;
+      font-size:12px;
+      line-height:1.35;
     }
   </style>
 </head>
 <body>
   <div id="map"></div>
+
   <div class="search-box">
-    <input type="text" id="buscador" placeholder="🔍 Buscar hospital o SAR..." />
+    <input type="text" id="buscador" placeholder="🔍 Buscar cuartel, SAPU, hospital, comuna..." />
+  </div>
+
+  <div class="layer-buttons">
+    <button class="btn-carab" onclick="mostrarSolo('carabineros')">👮 Cuarteles</button>
+    <button class="btn-salud" onclick="mostrarSolo('salud')">🚑 Salud</button>
+    <button class="btn-all" onclick="mostrarSolo('todos')">Todos</button>
   </div>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
-    const map = L.map('map').setView([-33.45, -70.66], 12);
+    const params = new URLSearchParams(location.search);
+    const startLat = parseFloat(params.get("lat")) || -33.4489;
+    const startLng = parseFloat(params.get("lng")) || -70.6693;
+    const startZoom = parseInt(params.get("z")) || 11;
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-      attribution: '© OpenStreetMap'
+    const map = L.map("map").setView([startLat, startLng], startZoom);
+
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom:19,
+      attribution:"© OpenStreetMap"
     }).addTo(map);
 
+    const capaCarabineros = L.layerGroup().addTo(map);
+    const capaSalud = L.layerGroup().addTo(map);
     const marcadores = [];
 
-    fetch("puntos-rutas-rapidas.json")
-      .then(res => res.json())
-      .then(data => {
-        data.forEach(p => {
-          const marker = L.marker([p.lat, p.lng])
-            .addTo(map)
-            .bindPopup(`
-              <strong>${p.nombre}</strong><br>
-              <a href="https://www.google.com/maps/search/?api=1&query=${p.lat},${p.lng}" target="_blank">📍 Ver en Google Maps</a>
-            `);
-          marcadores.push({ nombre: p.nombre.toLowerCase(), marker });
-        });
-      });
-
-    document.getElementById("buscador").addEventListener("input", e => {
-      const valor = e.target.value.toLowerCase();
-      marcadores.forEach(({ nombre, marker }) => {
-        if (nombre.includes(valor)) {
-          map.setView(marker.getLatLng(), 16);
-          marker.openPopup();
-        }
-      });
+    const iconCarabineros = L.divIcon({
+      html:"<div style='background:#00754a;color:white;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;border:2px solid white;box-shadow:0 2px 6px #333;'>👮</div>",
+      className:"",
+      iconSize:[28,28],
+      iconAnchor:[14,14]
     });
+
+    const iconSalud = L.divIcon({
+      html:"<div style='background:#0e7490;color:white;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;border:2px solid white;box-shadow:0 2px 6px #333;'>🚑</div>",
+      className:"",
+      iconSize:[28,28],
+      iconAnchor:[14,14]
+    });
+
+    async function cargarJSON(url){
+      const res = await fetch(url + "?v=" + Date.now());
+      if(!res.ok) throw new Error("No se pudo cargar " + url);
+      return await res.json();
+    }
+
+    function crearPopup(item, categoria){
+      const tipo = item.tipo || "";
+      const comuna = item.comuna || "";
+      const direccion = item.direccion || "";
+      const prefectura = item.prefectura || "";
+      const extra = categoria === "carabineros" ? prefectura : (item.tipo_urgencia || "");
+
+      return `
+        <strong>${item.nombre}</strong><br>
+        <span class="popup-meta">${tipo} · ${comuna}</span><br>
+        <span class="popup-meta">${extra || ""}</span><br>
+        <span class="popup-meta">${direccion}</span>
+        <a class="popup-btn" target="_blank" href="https://www.google.com/maps/search/?api=1&query=${item.lat},${item.lng}">📍 Navegar</a>
+      `;
+    }
+
+    function agregarMarcador(item, categoria){
+      if(typeof item.lat !== "number" || typeof item.lng !== "number") return;
+
+      const layer = categoria === "carabineros" ? capaCarabineros : capaSalud;
+      const icon = categoria === "carabineros" ? iconCarabineros : iconSalud;
+
+      const marker = L.marker([item.lat, item.lng], { icon })
+        .bindPopup(crearPopup(item, categoria))
+        .addTo(layer);
+
+      const texto = `${item.nombre} ${item.tipo || ""} ${item.comuna || ""} ${item.direccion || ""} ${item.prefectura || ""} ${item.tipo_urgencia || ""}`.toLowerCase();
+
+      marcadores.push({ marker, texto, categoria, item });
+    }
+
+    async function iniciar(){
+      try{
+        const cuarteles = await cargarJSON("cuarteles_rm.json");
+        cuarteles.forEach(item => agregarMarcador(item, "carabineros"));
+
+        const salud = await cargarJSON("salud_rm_urgencias.json");
+        salud.forEach(item => agregarMarcador(item, "salud"));
+
+        if(params.get("lat") && params.get("lng")){
+          setTimeout(()=> {
+            L.popup()
+              .setLatLng([startLat, startLng])
+              .setContent("Ubicación seleccionada")
+              .openOn(map);
+          }, 500);
+        }
+      }catch(e){
+        alert("Error cargando capas. Revisa que estén cuarteles_rm.json y salud_rm_urgencias.json en GitHub.");
+        console.error(e);
+      }
+    }
+
+    function mostrarSolo(tipo){
+      if(tipo === "carabineros"){
+        map.addLayer(capaCarabineros);
+        map.removeLayer(capaSalud);
+      }else if(tipo === "salud"){
+        map.removeLayer(capaCarabineros);
+        map.addLayer(capaSalud);
+      }else{
+        map.addLayer(capaCarabineros);
+        map.addLayer(capaSalud);
+      }
+    }
+
+    document.getElementById("buscador").addEventListener("input", e=>{
+      const valor = e.target.value.toLowerCase().trim();
+      if(valor.length < 2) return;
+
+      const encontrado = marcadores.find(m => m.texto.includes(valor));
+      if(encontrado){
+        const ll = encontrado.marker.getLatLng();
+        map.setView(ll, 16);
+        encontrado.marker.openPopup();
+      }
+    });
+
+    iniciar();
   </script>
-  <script src="app.js"></script>
 </body>
 </html>
