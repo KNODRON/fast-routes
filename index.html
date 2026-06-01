@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rutas Rápidas</title>
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#00754a">
+  <meta name="robots" content="noindex,nofollow">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Rutas Rápidas">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Rutas Rápidas</title>
+
   <style>
     :root{
       --verde:#00754a;
@@ -66,6 +68,7 @@
     .main-button.salud{ background:var(--azul); }
     .main-button.emergencia{ background:var(--rojo); font-size:19px; }
     .main-button.mapa{ background:#374151; }
+    .main-button.install{ background:#111827; display:none; }
 
     #search{
       display:none;
@@ -163,17 +166,11 @@
     }
   </style>
 </head>
-  <script>
-  if ("serviceWorker" in navigator) {
-    window.addEventListener("load", () => {
-      navigator.serviceWorker.register("./service-worker.js")
-        .catch(err => console.log("Service Worker error:", err));
-    });
-  }
-</script>
 <body>
   <h1>Rutas Rápidas</h1>
   <p class="subtitulo">Modo móvil para desplazamiento rápido en RM</p>
+
+  <button id="installBtn" class="main-button install" onclick="instalarApp()">📲 Instalar App</button>
 
   <button class="main-button" onclick="mostrarCuarteles()">👮 Buscar unidad de Carabineros</button>
   <button class="main-button salud" onclick="mostrarUrgenciasCercanas()">🚑 Urgencias cercanas a mí</button>
@@ -393,5 +390,49 @@
     });
   }
 </script>
+
+<script>
+  let deferredPrompt = null;
+
+  window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    const btn = document.getElementById("installBtn");
+    if (btn) btn.style.display = "block";
+  });
+
+  async function instalarApp() {
+    const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+    const isStandalone = window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone;
+
+    if (isStandalone) {
+      alert("La app ya está instalada.");
+      return;
+    }
+
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      await deferredPrompt.userChoice;
+      deferredPrompt = null;
+      const btn = document.getElementById("installBtn");
+      if (btn) btn.style.display = "none";
+      return;
+    }
+
+    if (isIOS) {
+      alert("Para instalar en iPhone:\n\n1. Abre esta página en Safari.\n2. Toca Compartir.\n3. Elige 'Agregar a pantalla de inicio'.");
+    } else {
+      alert("Si no aparece la opción de instalar, abre el menú del navegador y selecciona 'Agregar a pantalla principal' o 'Instalar app'.");
+    }
+  }
+
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("./service-worker.js")
+        .catch(err => console.log("Service Worker error:", err));
+    });
+  }
+</script>
+
 </body>
 </html>
