@@ -1541,10 +1541,22 @@
     "comuna": "BUIN",
     "provincia": "MAIPO",
     "prefectura": "DEL MAIPO",
-    "direccion": "RUTA RUTA G-46 KM 6",
+    "direccion": "RUTA G-46 KM 6",
     "coords": "-33.782424,-70.791541",
     "lat": -33.782424,
     "lng": -70.791541,
     "codigo": "13067"
+  }
+  {
+    "nombre": "TCIA. S.O.M. ÓSCAR GALINDO SARAVIA",
+    "tipo": "TENENCIA",
+    "comuna": "LA PINTANA",
+    "provincia": "CORDILLERA",
+    "prefectura": "SANTIAGO SUR",
+    "direccion": "AVDA. OBSERVATORIO N° 2129",
+    "coords": "-33.565186,-70.637234",
+    "lat": -33.565186,
+    "lng": -70.637234,
+    "codigo": "13069"
   }
 ]
