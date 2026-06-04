@@ -995,6 +995,18 @@
     "lng": -70.993459,
     "codigo": "13046"
   },
+    {
+    "nombre": "RETEN LOICA",
+    "tipo": "RETEN",
+    "comuna": "SAN PEDRO",
+    "provincia": "MELIPILLA",
+    "prefectura": "PREFECTURA COSTA",
+    "direccion": "Ruta G-690 Km 7",
+    "coords": "-33.976448,-71.469540",
+    "lat": -33.976448,
+    "lng": -71.469540,
+    "codigo": "13068"
+  },
   {
     "nombre": "RETEN CASA MONEDA",
     "tipo": "RETEN",
