@@ -1559,4 +1559,16 @@
     "lng": -70.637234,
     "codigo": "13069"
   }
+    {
+    "nombre": "29A. COM. LA FARFANA",
+    "tipo": "COMISARIA",
+    "comuna": "MAIPU",
+    "provincia": "SANTIAGO",
+    "prefectura": "SANTIAGO RINCONADA",
+    "direccion": "CALLE ISABEL RIQUELME",
+    "coords": "-33.495574,-70.780182", , 
+    "lat": -33.495574,
+    "lng": -70.780182,
+    "codigo": "13118"
+  }
 ]
