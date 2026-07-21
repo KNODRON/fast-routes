@@ -69,6 +69,7 @@
     .main-button.emergencia{ background:var(--rojo); font-size:19px; }
     .main-button.mapa{ background:#374151; }
     .main-button.install{ background:#111827; display:none; }
+    .main-button.hospital-carabineros{ background:#005131; }
 
     #search{
       display:none;
@@ -384,6 +385,15 @@
     }
   }
 
+  function irHospitalCarabineros(){
+  const destino = "-33.450658,-70.608463";
+
+  window.open(
+    `https://www.google.com/maps/dir/?api=1&destination=${destino}&travelmode=driving`,
+    "_blank"
+  );
+}
+  
   function filtrarListado(){
     const valor = document.getElementById("search").value.toLowerCase().trim();
     document.querySelectorAll(".unidad").forEach(div=>{
